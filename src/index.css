@@ -1,0 +1,50 @@
+body {
+  width: 600px;
+  height: 400px;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.homepagebox {
+  height: '100%';
+  width: '100%';
+  display: 'flex';
+  flexdirection: 'column';
+  backgroundcolor: '#303855';
+}
+
+.mainlayoutbox {
+  flexgrow: 2;
+  display: 'flex';
+  flexdirection: 'column';
+}
+
+.contractlisttemplatebox {
+  height: '100%';
+  display: 'flex';
+  flexdirection: 'column';
+  justifycontent: 'space-between';
+}
+
+/* STATUS BAR */
+.statusbarcontainer {
+  display: 'flex';
+  alignitems: 'center';
+  marginright: '0.5rem';
+}
+
+/* Contract details */
+.contractdetailsdiv {
+  position: 'absolute';
+  height: '100%';
+  width: '100%';
+}
