@@ -110,7 +110,7 @@ module.exports = {
     ],
     proxy: {
       '/electrs': {
-        target: 'http://localhost:3004',
+        target: 'http://127.0.0.1:3004',
         pathRewrite: { '^/electrs': '' },
       },
     },

@@ -30,7 +30,7 @@ export const MessageInput: FC<MessageInputProps> = (
   return (
     <Box sx={{ flexDirection: 'column', display: 'flex' }}>
       <TextField
-        sx={{ backgroundColor: 'white' }}
+        sx={{ backgroundColor: '#7383bf' }}
         multiline
         minRows={20}
         fullWidth
