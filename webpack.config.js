@@ -22,6 +22,8 @@ module.exports = {
         path.join(__dirname, '/public/manifest.json'),
         path.join(__dirname, '/public/logo192.png'),
         path.join(__dirname, '/public/logo512.png'),
+        path.join(__dirname, '/public/dlclinkicon.png'),
+        path.join(__dirname, '/public/DLC.Link_Emoji.png'),
         path.join(__dirname, '/public/favicon.ico'),
         path.join(__dirname, '/public/index.html'),
       ],
@@ -103,6 +105,7 @@ module.exports = {
     },
   },
   devServer: {
+    port: 9090,
     static: [
       path.join(__dirname, 'dist'),
       path.join(__dirname, 'cfd-dlc-js-wasm/dist'),

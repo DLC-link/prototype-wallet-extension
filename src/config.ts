@@ -5,6 +5,7 @@ import { regtest } from 'bitcoinjs-lib/src/networks'
 // when running the extension as a pre-compiled chrome-extension, use http://localhost:3004/
 const Config = {
   network: regtest,
+  // blockchainExplorerBaseUrl: 'http://localhost:9090/electrs/',
   blockchainExplorerBaseUrl: 'http://localhost:3004/',
 }
 

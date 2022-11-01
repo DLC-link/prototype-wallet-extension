@@ -8,13 +8,16 @@
     "default_title": "Open the popup"
   },
   "icons": {
-    "16": "logo192.png",
-    "48": "logo192.png",
-    "128": "logo192.png"
+    "16": "DLC.Link_Emoji.png",
+    "48": "DLC.Link_Emoji.png",
+    "128": "DLC.Link_Emoji.png"
   },
   "content_security_policy": {
-    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self';"
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
   },
   "permissions": ["storage"],
-  "host_permissions": ["http://localhost:3004/*"]
+  "host_permissions": ["http://localhost:3004/*, http://50.19.154.13:3004/*"],
+  "externally_connectable": {
+    "matches": ["http://localhost:8888/*, https://app.dlc.link/*"]
+  }
 }
