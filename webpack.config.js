@@ -1,7 +1,7 @@
 const webpack = require('webpack')
 const path = require('path')
 const CopyPlugin = require('copy-webpack-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const SRC_ROOT_PATH = path.join(__dirname, './', 'src');
 
@@ -26,7 +26,8 @@ module.exports = {
         path.join(__dirname, '/public/dlclinkicon.png'),
         path.join(__dirname, '/public/DLC.Link_Emoji.png'),
         path.join(__dirname, '/public/favicon.ico'),
-        path.join(__dirname, '/public/index.html')
+        path.join(__dirname, '/public/index.html'),
+        path.join(__dirname, '/public/popup-center.html')
       ],
     }),
     new CopyPlugin({

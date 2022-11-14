@@ -1,7 +1,6 @@
-import { Windows } from 'webextension-polyfill';
 
-const POPUP_CENTER_WIDTH = 442;
-const POPUP_CENTER_HEIGHT = 646;
+const POPUP_CENTER_WIDTH = 600;
+const POPUP_CENTER_HEIGHT = 700;
 
 interface PopupOptions {
   url?: string;

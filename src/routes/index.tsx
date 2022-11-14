@@ -6,6 +6,7 @@ import {
   useLocation,
   useNavigate,
 } from 'react-router-dom'
+import { PopupHandler } from '../background/PopupHandler'
 import ContractDetailPage from '../components/pages/ContractDetail'
 import HomePage from '../components/pages/HomePage'
 import AcceptOfferPage from '../components/pages/OfferInput'
@@ -34,13 +35,15 @@ const LocationHandler: FC = () => {
       locationStore.saveLocation(location.pathname)
     }
     locationCb()
-  }, [location, navigate, isInit])
+  }, [location, navigate, isInit]);
   return <></>
 }
+
 
 const routes = (
   <Root>
     <MemoryRouter>
+      <PopupHandler />
       <LocationHandler />
       <Routes>
         <Route path="/" element={<HomePage />} />
