@@ -11,19 +11,13 @@ chrome.runtime.onMessageExternal.addListener(
     switch(request.action) {
       case 'get-offer': {
         console.log('[BG script]: request.data:', request.data);
-        const url = '/acceptoffer';
-        const window = await popupCenter({ url: `/popup-center.html#${url}`});
+        await popupCenter({ url: `/index.html`});
 
         // TODO: this works because we want to wait or the window to load fully. Should at least show the user that its loading.
         setTimeout(
-          () => chrome.runtime.sendMessage({ action: 'get-offer' }, (response) => console.log('[BG script]: response:', response)),
+          () => chrome.runtime.sendMessage({ action: 'get-offer', data: request.data }, (response) => console.log('[BG script]: response:', response)),
           500
         )
-        break;
-      }
-      case 'accept-offer': {
-
-
         break;
       }
     }
