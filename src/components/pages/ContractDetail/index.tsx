@@ -17,15 +17,18 @@ const useSelector: TypedUseSelectorHook<ApplicationState> = useReduxSelector
 
 const ContractDetailPage: FC = () => {
   const dispatch = useDispatch()
+  const loading = useSelector((state) => state.dlc.processing)
   const params = useParams()
   const success = useSelector((state) => state.dlc.actionSuccess)
-  const [processRequested, setProcessRequested] = useState(false)
+  const [signingRequested, setSigningRequested] = useState(false)
+  const [acceptMessageSubmitted, setAcceptMessageSubmitted] = useState(false)
   const snackbar = useSnackbar()
   const dlcError = useSelector((state) => state.dlc.error)
   const [displayError, setDisplayError] = useState(true)
+  const curContractId = useSelector((state) => state.dlc.currentId)
   const contractId = params.contractId
   const contracts = useSelector((state) => state.dlc.contracts)
-  const contract = contracts.find((c) => getId(c) === contractId)
+  let contract = contracts.find((c) => getId(c) === contractId)
   const navigate = useNavigate()
 
   const statusBarCtx = useStatusBarContext()
@@ -41,6 +44,18 @@ const ContractDetailPage: FC = () => {
   }, [displayError, dlcError, snackbar, dispatch])
 
   useEffect(() => {
+    if (loading) {
+      snackbar.createSnack('Loading...', 'warning')
+    }
+  }, [loading])
+
+  useEffect(() => {
+    if (curContractId && contract?.state != ContractState.Accepted)
+      contract = contracts.find((c) => getId(c) === curContractId)
+    console.log(curContractId, contract)
+  }, [curContractId])
+
+  useEffect(() => {
     async function getBalance() {
       const balance = await statusBarCtx.getBalance()
       setAvailableAmount(balance)
@@ -49,49 +64,19 @@ const ContractDetailPage: FC = () => {
   }, [statusBarCtx])
 
   useEffect(() => {
-    async function writeAcceptMessage() {
-      if (contract.state === ContractState.Accepted) {
-        const acceptMessage = toAcceptMessage(contract);
-        console.log('acceptMessage: ', acceptMessage)
-        const formattedMessage = { "accept_message": acceptMessage.toString() };
-        console.log('formattedMessage: ', formattedMessage)
-        // FIXME: hardcoded wallet BE endpoint
-        try {
-          await fetch(
-            "http://oracle.dlc.link:8085/acceptoffer",
-            {
-              headers: { accept: "Accept: application/json" },
-              method: 'POST',
-              mode: 'no-cors',
-              body: JSON.stringify(formattedMessage)
-            }
-          )
-            .then((x) => x.json())
-            .then((res) => {
-              console.log(res);
-              signAcceptMessage(res);
-            })
-        } catch (error) {
-          console.error(`fetcherror: ${error}`);
-        }
-      }
-    }
-    // TODO: this fires if we just open an existing Accepted contract's page
-    if (contract) writeAcceptMessage()
-  }, [contract])
-
-  useEffect(() => {
-    if (processRequested && success) {
+    if (signingRequested && success) {
       navigate(`/`)
+    }
+    console.log(acceptMessageSubmitted, success, contract?.state === ContractState.Accepted);
+    if (acceptMessageSubmitted && success && contract?.state === ContractState.Accepted) {
+      writeAcceptMessage();
     }
   })
 
-  const signAcceptMessage = (message: string): void => {
-    setProcessRequested(true)
-    dispatch(signRequest(message))
-  }
-
   const handleAccept = (): void => {
+    // This action will set the contract's status to Accepted
+    // It will also update the contractID from temp to id.
+    setAcceptMessageSubmitted(true)
     dispatch(acceptRequest(getId(contract)))
   }
 
@@ -102,6 +87,40 @@ const ContractDetailPage: FC = () => {
 
   const handleCancel = (): void => {
     navigate('/')
+  }
+
+  const signAcceptMessage = (message: string): void => {
+    setSigningRequested(true)
+    dispatch(signRequest(message))
+  }
+
+  async function writeAcceptMessage() {
+    console.log('writeAcceptMessage:')
+    if (contract?.state === ContractState.Accepted) {
+      const acceptMessage = toAcceptMessage(contract);
+      const formattedMessage = { "acceptMessage": JSON.stringify(acceptMessage).toString() };
+      console.log(formattedMessage)
+      // NOTE: hardcoded wallet BE endpoint
+      try {
+        await fetch(
+          "https://dev-oracle.dlc.link/wallet/offer/accept",
+          {
+            headers: {'Content-Type': 'application/json'},
+            method: 'PUT',
+            mode: 'cors',
+            body: JSON.stringify(formattedMessage)
+          }
+        )
+          .then((x) => x.json())
+          .then((res) => {
+            console.log(res);
+            signAcceptMessage(res);
+            setAcceptMessageSubmitted(false);
+          })
+      } catch (error) {
+        console.error(`Fetch Error: ${error}`);
+      }
+    }
   }
 
   return (

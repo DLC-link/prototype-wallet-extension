@@ -14,6 +14,8 @@ import {
 import { useSnackbar } from '../../providers/Snackbar'
 import { dlcActionError, offerRequest } from '../../store/dlc/actions'
 import { ApplicationState } from '../../store'
+import { RequestInterface } from '../background';
+
 
 const useSelector: TypedUseSelectorHook<ApplicationState> = useReduxSelector;
 
@@ -37,9 +39,8 @@ export const PopupHandler: FC = () => {
 
   useEffect(() => {
     if (processRequested && success) {
-      console.log('curContractId in PopupHandler:', curContractId)
       navigate(`/contractdisplay/${curContractId}`);
-      setProcessRequested(false); 
+      setProcessRequested(false);
     }
   })
 
@@ -48,12 +49,12 @@ export const PopupHandler: FC = () => {
     dispatch(offerRequest(message));
   }
 
-  chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    console.log(request, sender);
-    if (request.action == 'get-offer') {
-      handleProcessClicked(request.data);
+  chrome.runtime.onMessage.addListener((request: RequestInterface, sender, sendResponse) => {
+    if (request.action == 'get-offer-internal') {
+      handleProcessClicked(JSON.stringify(request.data));
+      sendResponse('[PopUpHandler]: Heard get-offer-internal')
     }
-    sendResponse('ok')
+    sendResponse('[PopUpHandler]: Invalid request.action')
   })
 
   return <></>

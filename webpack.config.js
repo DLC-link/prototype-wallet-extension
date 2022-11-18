@@ -16,10 +16,6 @@ module.exports = {
   },
   plugins: [
     new MiniCssExtractPlugin(),
-    // new HtmlWebpackPlugin({
-    //   template: path.join(__dirname, '/public/index.html'),
-    //   chunks: ['index'],
-    // }),
     new CopyPlugin({
       patterns: [
         path.join(__dirname, '/public/manifest.json'),
@@ -37,7 +33,7 @@ module.exports = {
     }),
     new webpack.ProvidePlugin({
       Buffer: ['buffer', 'Buffer'],
-    }),
+    })
   ],
   module: {
     rules: [
