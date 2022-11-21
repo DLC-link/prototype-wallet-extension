@@ -67,7 +67,6 @@ const ContractDetailPage: FC = () => {
     if (signingRequested && success) {
       navigate(`/`)
     }
-    console.log(acceptMessageSubmitted, success, contract?.state === ContractState.Accepted);
     if (acceptMessageSubmitted && success && contract?.state === ContractState.Accepted) {
       writeAcceptMessage();
     }
@@ -99,7 +98,6 @@ const ContractDetailPage: FC = () => {
     if (contract?.state === ContractState.Accepted) {
       const acceptMessage = toAcceptMessage(contract);
       const formattedMessage = { "acceptMessage": JSON.stringify(acceptMessage).toString() };
-      console.log(formattedMessage)
       // NOTE: hardcoded wallet BE endpoint
       try {
         await fetch(
