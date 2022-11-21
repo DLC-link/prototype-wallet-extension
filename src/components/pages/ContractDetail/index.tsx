@@ -98,13 +98,17 @@ const ContractDetailPage: FC = () => {
     if (contract?.state === ContractState.Accepted) {
       const acceptMessage = toAcceptMessage(contract);
       const formattedMessage = { "acceptMessage": JSON.stringify(acceptMessage).toString() };
+      // const formattedMessage = { "accept_message": JSON.stringify(acceptMessage).toString() };
       // NOTE: hardcoded wallet BE endpoint
       try {
         await fetch(
-          "https://dev-oracle.dlc.link/wallet/offer/accept",
+          // "https://dev-oracle.dlc.link/wallet/offer/accept",
+          // "http://oracle.dlc.link:8085/acceptoffer",
+          "http://oracle.dlc.link:8085/offer/accept",
           {
             headers: {'Content-Type': 'application/json'},
             method: 'PUT',
+            // method: 'POST',
             mode: 'cors',
             body: JSON.stringify(formattedMessage)
           }
@@ -112,7 +116,7 @@ const ContractDetailPage: FC = () => {
           .then((x) => x.json())
           .then((res) => {
             console.log(res);
-            signAcceptMessage(res);
+            signAcceptMessage(JSON.stringify(res));
             setAcceptMessageSubmitted(false);
           })
       } catch (error) {
