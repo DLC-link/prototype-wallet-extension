@@ -1,36 +1,39 @@
 const webpack = require('webpack')
 const path = require('path')
 const CopyPlugin = require('copy-webpack-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
+const SRC_ROOT_PATH = path.join(__dirname, './', 'src');
 
 module.exports = {
   entry: {
-    index: './src/index.tsx',
+    background: path.join(SRC_ROOT_PATH, 'background', 'background.ts'),
+    index: path.join(SRC_ROOT_PATH, 'index.tsx'),
   },
   output: {
     path: path.join(__dirname, '/dist'),
-    filename: 'bundle.js',
+    filename: () => '[name].js',
   },
   plugins: [
     new MiniCssExtractPlugin(),
-    // new HtmlWebpackPlugin({
-    //   template: path.join(__dirname, '/public/index.html'),
-    //   chunks: ['index'],
-    // }),
     new CopyPlugin({
       patterns: [
         path.join(__dirname, '/public/manifest.json'),
-        path.join(__dirname, '/public/logo192.png'),
-        path.join(__dirname, '/public/logo512.png'),
         path.join(__dirname, '/public/dlclinkicon.png'),
         path.join(__dirname, '/public/DLC.Link_Emoji.png'),
         path.join(__dirname, '/public/favicon.ico'),
         path.join(__dirname, '/public/index.html'),
+        path.join(__dirname, '/public/popup-center.html')
       ],
+    }),
+    new CopyPlugin({
+      patterns: [{
+        from: 'node_modules/webextension-polyfill/dist/browser-polyfill.js',
+      }],
     }),
     new webpack.ProvidePlugin({
       Buffer: ['buffer', 'Buffer'],
-    }),
+    })
   ],
   module: {
     rules: [

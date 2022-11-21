@@ -33,8 +33,9 @@ const reducer: Reducer<DlcState> = (state: DlcState = initialState, action) => {
     case DlcActionTypes.DLC_ACTION_SUCCESS: {
       const updatedContract = action.payload as AnyContract
       const newContracts = [...state.contracts]
+      // NOTE: This is what fails. Contract ID is born in the dlcAPI.acceptContract call in the saga file. So our tempID is no longer found in the array so things break.
       const contractIndex = state.contracts.findIndex(
-        (c) => getId(c) === getId(updatedContract)
+        (c) => getId(c) === getId(updatedContract) || c.temporaryContractId === updatedContract.temporaryContractId
       )
       if (contractIndex >= 0) newContracts[contractIndex] = updatedContract
       else newContracts.push(updatedContract)
