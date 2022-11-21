@@ -1,6 +1,6 @@
 import React from 'react'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
-import { Box } from '@mui/material'
+import { Box, IconButton, Typography, Stack } from '@mui/material'
 import { DateTime } from 'luxon'
 import MUIDataTable, {
   MUIDataTableProps,
@@ -12,6 +12,7 @@ import numbro from 'numbro'
 import { FC, ReactElement, useEffect, useState } from 'react'
 import { ContractState } from 'dlc-lib'
 import { AnyContract } from 'dlc-lib'
+import { useSnackbar } from '../../../providers/Snackbar'
 
 export type DataGridProps = Omit<
   MUIDataTableProps,
@@ -108,12 +109,26 @@ function toCollateralString(collateral: number): string {
   return collateralString
 }
 
+export const truncateContractID = (contractID: string) => {
+  return (
+    contractID.substring(0, 4) +
+    '...' +
+    contractID.substring(contractID.length - 4, contractID.length)
+  )
+}
+
 const DataGrid: FC<DataGridProps> = (props: DataGridProps) => {
   const [localData, setLocalData] = useState<AnyContract[]>(props.data)
+  const snackbar = useSnackbar()
 
   useEffect(() => {
     setLocalData(props.data)
   }, [props.data])
+
+  const copyToClickBoard = async (contractID: string) => {
+    await navigator.clipboard.writeText(contractID)
+    snackbar.createSnack('Contract ID copied to clipboard', 'success')
+  }
 
   const options = {
     selectableRows: 'none' as SelectableRows,
@@ -138,9 +153,47 @@ const DataGrid: FC<DataGridProps> = (props: DataGridProps) => {
         customBodyRenderLite: (dataIndex: number): ReactElement => {
           const contract = localData[dataIndex]
           if ('id' in contract) {
-            return <Box> {contract.id}</Box>
+            return (
+              <Stack
+                direction="row"
+                spacing={2}
+                alignItems="center"
+                justifyContent="flex-start"
+              >
+                <Typography> {truncateContractID(contract.id)} </Typography>
+                <IconButton
+                  size="small"
+                  onClick={(event) => (
+                    event.stopPropagation(),
+                    copyToClickBoard(contract.temporaryContractId)
+                  )}
+                >
+                  <Typography fontSize={12}>Copy full address</Typography>
+                </IconButton>
+              </Stack>
+            )
           }
-          return <Box>{contract.temporaryContractId}</Box>
+          return (
+            <Stack
+              direction="row"
+              spacing={2}
+              alignItems="center"
+              justifyContent="flex-start"
+            >
+              <Typography>
+                {truncateContractID(contract.temporaryContractId)}
+              </Typography>
+              <IconButton
+                size="small"
+                onClick={(event) => (
+                  event.stopPropagation(),
+                  copyToClickBoard(contract.temporaryContractId)
+                )}
+              >
+                <Typography fontSize={12}>Copy full address</Typography>
+              </IconButton>
+            </Stack>
+          )
         },
       },
     },

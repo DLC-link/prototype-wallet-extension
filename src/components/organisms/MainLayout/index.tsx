@@ -13,6 +13,7 @@ const MainLayout: FC<LayoutProps> = (props: LayoutProps) => {
   const statusBarContext = useStatusBarContext()
 
   const [balance, setBalance] = useState(0)
+  const [isLoading, setLoading] = useState(true)
 
   useEffect(() => {
     getBalance()
@@ -20,8 +21,12 @@ const MainLayout: FC<LayoutProps> = (props: LayoutProps) => {
   }, [])
 
   const getBalance = async (): Promise<void> => {
-    const balance = await statusBarContext.getBalance()
-    setBalance(balance)
+    setLoading(true)
+    await statusBarContext
+      .getBalance()
+      .then((balance) => setBalance(balance))
+      .then(() => setLoading(false))
+      .then(() => console.log(isLoading))
   }
 
   const handleRefresh = (): void => {
@@ -30,7 +35,11 @@ const MainLayout: FC<LayoutProps> = (props: LayoutProps) => {
 
   return (
     <Box>
-      <StatusBar balance={balance} refresh={handleRefresh} />
+      <StatusBar
+        balance={balance}
+        refresh={handleRefresh}
+        isLoading={isLoading}
+      />
       <Box>
         <Box sx={{ flexGrow: 2, display: 'flex', flexDirection: 'column' }}>
           {props.children}
