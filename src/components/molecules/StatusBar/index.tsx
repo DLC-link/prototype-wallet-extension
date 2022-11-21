@@ -61,6 +61,9 @@ const StatusBar: FC<StatusBarProps> = (props: StatusBarProps) => {
               <LoadingButton
                 sx={{
                   marginRight: '0.5rem',
+                  '& .MuiLoadingButton-loadingIndicator': {
+                    color: 'white'
+                  }
                 }}
                 size="small"
                 loading={props.isLoading}
