@@ -2,6 +2,7 @@ import React, { FC } from 'react'
 import {
   AppBar,
   Box,
+  Button,
   Container,
   createTheme,
   IconButton,
@@ -9,12 +10,15 @@ import {
 } from '@mui/material'
 import { ThemeProvider } from '@mui/material/styles'
 import { Refresh } from '@mui/icons-material'
+import { LoadingButton } from '@mui/lab'
 
 import p2plogo from '../../../assets/dlclinklogo.svg'
 import { BtcDisplay } from '../../atoms/BtcDisplay'
+import { height } from '@mui/system'
 
 type StatusBarProps = {
   balance: number
+  isLoading: boolean
   refresh: () => void
 }
 
@@ -54,9 +58,18 @@ const StatusBar: FC<StatusBarProps> = (props: StatusBarProps) => {
                 marginRight: '0.5rem',
               }}
             >
-              <IconButton color="secondary" onClick={props.refresh}>
+              <LoadingButton
+                sx={{
+                  marginRight: '0.5rem',
+                }}
+                size="small"
+                loading={props.isLoading}
+                color="inherit"
+                variant="outlined"
+                onClick={props.refresh}
+              >
                 <Refresh />
-              </IconButton>
+              </LoadingButton>
               <BtcDisplay satvalue={props.balance} currency="BTC" />
             </Container>
           </Toolbar>

@@ -18,7 +18,7 @@ export default {
 export const statusBar = (): ReactElement => (
   <ThemeProvider theme={theme}>
     <Container maxWidth="xs">
-      <StatusBar balance={1.337} refresh={action('refresh')} />
+      <StatusBar balance={1.337} refresh={action('refresh')} isLoading={false} />
     </Container>
   </ThemeProvider>
 )
