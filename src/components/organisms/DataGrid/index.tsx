@@ -1,6 +1,6 @@
 import React from 'react'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
-import { Box, IconButton, Typography, Stack } from '@mui/material'
+import { Box, IconButton, Typography, Stack, Grid, Link, } from '@mui/material'
 import { DateTime } from 'luxon'
 import MUIDataTable, {
   MUIDataTableProps,
@@ -46,6 +46,7 @@ const theme = createTheme({
       active: '#E4E7EF',
     },
   },
+
   components: {
     MuiInput: {
       styleOverrides: {
@@ -72,7 +73,7 @@ const theme = createTheme({
     MUIDataTable: {
       paper: {
         height: 'inherit',
-        overflow: 'auto',
+        overflow: 'none',
       },
     },
     MUIDataTableSelectCell: {
@@ -100,6 +101,34 @@ const theme = createTheme({
   },
 })
 
+function getGridItem(
+  title: string,
+  content: ReactElement,
+  dataTitle: string,
+  key: number
+): ReactElement {
+  return (
+    <Grid key={key} item xs={4}>
+      <div>
+        <Typography variant="body2" color="textPrimary">
+          {title}
+        </Typography>
+        {content}
+      </div>
+    </Grid>
+  )
+}
+
+function getLinkGridItem(
+  title: string,
+  link: string,
+  dataTitle: string,
+  key: number
+): ReactElement {
+  const reactElement = <Link href={link}>Fund transaction</Link>
+  return getGridItem(title, reactElement, dataTitle, key)
+}
+
 function toCollateralString(collateral: number): string {
   if (isNaN(collateral)) return ''
   const collateralString = numbro(collateral).format({
@@ -125,10 +154,10 @@ const DataGrid: FC<DataGridProps> = (props: DataGridProps) => {
     setLocalData(props.data)
   }, [props.data])
 
-  const copyToClickBoard = async (contractID: string) => {
-    await navigator.clipboard.writeText(contractID)
-    snackbar.createSnack('Contract ID copied to clipboard', 'success')
-  }
+  // const copyToClickBoard = async (contractID: string) => {
+  //   await navigator.clipboard.writeText(contractID)
+  //   snackbar.createSnack('Contract ID copied to clipboard', 'success')
+  // }
 
   const options = {
     selectableRows: 'none' as SelectableRows,
@@ -145,68 +174,68 @@ const DataGrid: FC<DataGridProps> = (props: DataGridProps) => {
   }
 
   const columns = [
-    {
-      name: 'id',
-      label: 'Contract ID',
-      options: {
-        sort: true,
-        customBodyRenderLite: (dataIndex: number): ReactElement => {
-          const contract = localData[dataIndex]
-          if ('id' in contract) {
-            return (
-              <Stack
-                direction="row"
-                spacing={2}
-                alignItems="center"
-                justifyContent="flex-start"
-              >
-                <Typography> {truncateContractID(contract.id)} </Typography>
-                <IconButton
-                  size="small"
-                  onClick={(event) => (
-                    event.stopPropagation(),
-                    copyToClickBoard(contract.temporaryContractId)
-                  )}
-                >
-                  <Typography fontSize={12}>Copy full address</Typography>
-                </IconButton>
-              </Stack>
-            )
-          }
-          return (
-            <Stack
-              direction="row"
-              spacing={2}
-              alignItems="center"
-              justifyContent="flex-start"
-            >
-              <Typography>
-                {truncateContractID(contract.temporaryContractId)}
-              </Typography>
-              <IconButton
-                size="small"
-                onClick={(event) => (
-                  event.stopPropagation(),
-                  copyToClickBoard(contract.temporaryContractId)
-                )}
-              >
-                <Typography fontSize={12}>Copy full address</Typography>
-              </IconButton>
-            </Stack>
-          )
-        },
-      },
-    },
-    {
-      name: 'state',
-      label: 'Status',
-      options: {
-        sort: true,
-        customBodyRender: (value: ContractState): ReactElement => (
-          <Box>{ContractState[value]}</Box>
-        ),
-      },
-    },
+    // {
+    //   name: 'id',
+    //   label: 'Contract ID',
+    //   options: {
+    //     sort: true,
+    //     customBodyRenderLite: (dataIndex: number): ReactElement => {
+    //       const contract = localData[dataIndex]
+    //       if ('id' in contract) {
+    //         return (
+    //           <Stack
+    //             direction="row"
+    //             spacing={2}
+    //             alignItems="center"
+    //             justifyContent="flex-start"
+    //           >
+    //             <Typography> {truncateContractID(contract.id)} </Typography>
+    //             <IconButton
+    //               size="small"
+    //               onClick={(event) => (
+    //                 event.stopPropagation(),
+    //                 copyToClickBoard(contract.temporaryContractId)
+    //               )}
+    //             >
+    //               <Typography fontSize={12}>Copy full address</Typography>
+    //             </IconButton>
+    //           </Stack>
+    //         )
+    //       }
+    //       return (
+    //         <Stack
+    //           direction="row"
+    //           spacing={2}
+    //           alignItems="center"
+    //           justifyContent="flex-start"
+    //         >
+    //           <Typography>
+    //             {truncateContractID(contract.temporaryContractId)}
+    //           </Typography>
+    //           <IconButton
+    //             size="small"
+    //             onClick={(event) => (
+    //               event.stopPropagation(),
+    //               copyToClickBoard(contract.temporaryContractId)
+    //             )}
+    //           >
+    //             <Typography fontSize={12}>Copy full address</Typography>
+    //           </IconButton>
+    //         </Stack>
+    //       )
+    //     },
+    //   },
+    // },
+    // {
+    //   name: 'state',
+    //   label: 'Status',
+    //   options: {
+    //     sort: true,
+    //     customBodyRender: (value: ContractState): ReactElement => (
+    //       <Box>{ContractState[value]}</Box>
+    //     ),
+    //   },
+    // },
     {
       name: 'offerCollateral',
       label: 'Offer Collateral',
@@ -239,20 +268,20 @@ const DataGrid: FC<DataGridProps> = (props: DataGridProps) => {
         },
       },
     },
-    {
-      name: 'contractMaturityBound',
-      label: 'Maturity Time',
-      options: {
-        sort: true,
-        customBodyRenderLite: (dataIndex: number): ReactElement => (
-          <Box>
-            {DateTime.fromMillis(
-              localData[dataIndex].contractMaturityBound * 1000
-            ).toLocaleString(DateTime.DATETIME_FULL_WITH_SECONDS)}
-          </Box>
-        ),
-      },
-    },
+    // {
+    //   name: 'contractMaturityBound',
+    //   label: 'Maturity Time',
+    //   options: {
+    //     sort: true,
+    //     customBodyRenderLite: (dataIndex: number): ReactElement => (
+    //       <Box>
+    //         {DateTime.fromMillis(
+    //           localData[dataIndex].contractMaturityBound * 1000
+    //         ).toLocaleString(DateTime.DATETIME_FULL_WITH_SECONDS)}
+    //       </Box>
+    //     ),
+    //   },
+    // },
   ]
 
   return (

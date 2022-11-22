@@ -51,8 +51,7 @@ const ContractListTemplate: FC<ContractListTemplateProps> = (
           />
         </Box>
       </MainLayout>
-      <NewAddressDialog />
-      <Button onClick={props.onAcceptOfferClicked}>Accept Offer</Button>
+      {/* <Button onClick={props.onAcceptOfferClicked}>Accept Offer</Button> */}
     </Box>
   )
 }

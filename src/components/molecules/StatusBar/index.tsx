@@ -11,10 +11,11 @@ import {
 import { ThemeProvider } from '@mui/material/styles'
 import { Refresh } from '@mui/icons-material'
 import { LoadingButton } from '@mui/lab'
+import { NewAddressDialog } from '../../organisms/NewAddressDialog'
 
 import p2plogo from '../../../assets/dlclinklogo.svg'
 import { BtcDisplay } from '../../atoms/BtcDisplay'
-import { height } from '@mui/system'
+import { fontFamily, height } from '@mui/system'
 
 type StatusBarProps = {
   balance: number
@@ -62,19 +63,20 @@ const StatusBar: FC<StatusBarProps> = (props: StatusBarProps) => {
                 sx={{
                   marginRight: '0.5rem',
                   '& .MuiLoadingButton-loadingIndicator': {
-                    color: 'white'
-                  }
+                    color: 'white',
+                  },
                 }}
                 size="small"
                 loading={props.isLoading}
                 color="inherit"
-                variant="outlined"
+                variant="text"
                 onClick={props.refresh}
               >
                 <Refresh />
               </LoadingButton>
               <BtcDisplay satvalue={props.balance} currency="BTC" />
             </Container>
+            <NewAddressDialog />
           </Toolbar>
         </AppBar>
       </ThemeProvider>

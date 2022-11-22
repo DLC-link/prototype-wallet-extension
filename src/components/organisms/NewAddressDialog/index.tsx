@@ -23,11 +23,18 @@ export const NewAddressDialog: FC = () => {
 
   return (
     <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Get receiving address
+      <Button
+        size="small"
+        color="inherit"
+        variant="outlined"
+        onClick={handleClickOpen}
+      >
+        <Typography fontSize="12px" color="inherit">Get receiving address</Typography>
       </Button>
-      <Dialog open={open} onClose={handleClose} >
-        <DialogTitle style={{ textAlign: "center" }}>Address to fund the wallet</DialogTitle>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle style={{ textAlign: 'center' }}>
+          Address to fund the wallet
+        </DialogTitle>
         <DialogContent dividers>
           <Typography gutterBottom>{balance}</Typography>
         </DialogContent>
