@@ -32,12 +32,13 @@ const ContractListTemplate: FC<ContractListTemplateProps> = (
         width: '100%',
         display: 'flex',
         flexDirection: 'column',
-        backgroundColor: '#303855',
+        backgroundColor: "#f7931a",
       }}
     >
       <MainLayout>
         <Box
           sx={{
+            borderRadius: "large",
             height: '100%',
             display: 'flex',
             flexDirection: 'column',

@@ -6,6 +6,7 @@ import Dialog from '@mui/material/Dialog'
 import Typography from '@mui/material/Typography'
 import { FC, useState } from 'react'
 import { useAddressContext } from '../../../providers/AddressProvider'
+import ContactEmergencyIcon from '@mui/icons-material/ContactEmergency'
 
 export const NewAddressDialog: FC = () => {
   const addressContext = useAddressContext()
@@ -26,10 +27,10 @@ export const NewAddressDialog: FC = () => {
       <Button
         size="small"
         color="inherit"
-        variant="outlined"
+        variant="text"
         onClick={handleClickOpen}
       >
-        Get receiving address
+        <ContactEmergencyIcon></ContactEmergencyIcon>
       </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle style={{ textAlign: 'center' }}>

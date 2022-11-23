@@ -24,16 +24,24 @@ type StatusBarProps = {
 }
 
 const theme = createTheme({
+
   palette: {
     primary: {
-      light: '#69F8C4',
-      main: '#303855',
-      dark: '#09E998',
+      light: "#f7931a",
+      main: "#f7931a",
+      dark: "#f7931a",
     },
     secondary: {
-      light: '#FFFFFF',
-      main: '#E4E7EF',
-      dark: '#B3B6C2',
+      light: "#ffffff",
+      main: "#ffffff",
+      dark: "#ffffff",
+    },
+    background: {
+      default: "#f7931a"
+    },
+    text: {
+      primary: "#ffffff",
+      secondary: "#ffffff",
     },
   },
 })

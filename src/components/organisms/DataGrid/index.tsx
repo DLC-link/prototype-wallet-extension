@@ -1,6 +1,7 @@
 import React from 'react'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
-import { Box, IconButton, Typography, Stack, Grid, Link } from '@mui/material'
+import { Box, IconButton, Typography, Stack, Grid, Link, Button } from '@mui/material'
+import PaymentsIcon from '@mui/icons-material/Payments';
 import { DateTime } from 'luxon'
 import MUIDataTable, {
   MUIDataTableProps,
@@ -15,6 +16,7 @@ import { useSnackbar } from '../../../providers/Snackbar'
 import { AnyContract } from 'dlc-lib'
 import { Transaction } from 'bitcoinjs-lib'
 import Config from '../../../config'
+import { contractError } from '../../../store/dlc/actions';
 
 export type DataGridProps = Omit<
   MUIDataTableProps,
@@ -27,46 +29,37 @@ export type DataGridProps = Omit<
 const theme = createTheme({
   palette: {
     primary: {
-      light: '#E4E7EF',
-      main: '#E4E7EF',
-      dark: '#E4E7EF',
+      light: "#f7931a",
+      main: "#f7931a",
+      dark: "#f7931a",
     },
     secondary: {
-      light: '#FFFFFF',
-      main: '#E4E7EF',
-      dark: '#B3B6C2',
+      light: "#0d579b",
+      main: "#0d579b",
+      dark: "#0d579b",
     },
     background: {
-      default: '#3A4473',
-      paper: '#3A4473',
+      default: "#ffffff",
+      paper: "#ffffff",
     },
     text: {
-      primary: '#E4E7EF',
-      secondary: '#A2A6B4',
+      primary: "#0d579b",
+      secondary: "#4d4d4d",
     },
     action: {
-      active: '#E4E7EF',
+      active: "#f7931a",
     },
   },
 
   components: {
-    MuiInput: {
-      styleOverrides: {
-        underline: {
-          '&:before': {
-            borderBottomColor: '#E4E7EF',
-          },
-        },
-      },
-    },
     MuiTableRow: {
       styleOverrides: {
         root: {
           '&$selected': {
-            backgroundColor: 'rgb(255, 255, 255, 0.05)',
+            backgroundColor: "",
           },
           '&$hover:hover': {
-            backgroundColor: 'rgb(255, 255, 255, 0.1)',
+            backgroundColor: "",
           },
         },
       },
@@ -102,6 +95,10 @@ const theme = createTheme({
     },
   },
 })
+
+function openNewTab(blockChainLink: any) {
+  window.open(blockChainLink, "_blank");
+}
 
 function getGridItem(
   title: string,
@@ -165,14 +162,14 @@ const DataGrid: FC<DataGridProps> = (props: DataGridProps) => {
     selectableRows: 'none' as SelectableRows,
     responsive: 'vertical' as Responsive,
     denseTable: false,
-    onRowClick: (
-      _: any[],
-      raw: { dataIndex: number; rowIndex: number }
-    ): void => {
-      if (props.onRowClick) {
-        props.onRowClick(raw.dataIndex)
-      }
-    },
+    // onRowClick: (
+    //   _: any[],
+    //   raw: { dataIndex: number; rowIndex: number }
+    // ): void => {
+    //   if (props.onRowClick) {
+    //     props.onRowClick(raw.dataIndex)
+    //   }
+    // },
   }
 
   const columns = [
@@ -276,17 +273,17 @@ const DataGrid: FC<DataGridProps> = (props: DataGridProps) => {
       options: {
         sort: true,
         customBodyRenderLite: (dataIndex: number): ReactElement => {
+          const blockChaineExplorerBaseUrl = "http://stx-btc1.dlc.link:8001/";
           const contract = localData[dataIndex]
-          console.log(contract.state)
           if (contract.state == ContractState.Broadcast) {
             const fundTxId = Transaction.fromHex(
               contract.dlcTransactions.fund
             ).getId()
             const blockchainLink =
-              Config.blockchainExplorerBaseUrl + `tx/${fundTxId}`
+              blockChaineExplorerBaseUrl + `tx/${fundTxId}`
             console.log('fundTxId: ' + fundTxId)
             console.log('blockchainLink: ' + blockchainLink)
-            return <Link href={blockchainLink}>Fund Transaction</Link>
+            return <Button size="small" onClick={() => openNewTab(blockchainLink)}><PaymentsIcon color="inherit"></PaymentsIcon></Button>
           }
         },
       },
