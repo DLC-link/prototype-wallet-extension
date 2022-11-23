@@ -41,6 +41,14 @@ type ContentTypeBtc = {
   pnlColors?: boolean
 }
 
+function truncateContractID(contractID: string) {
+  return (
+    contractID.substring(0, 4) +
+    '...' +
+    contractID.substring(contractID.length - 4, contractID.length)
+  )
+}
+
 function isBtc(val: ContentType): val is ContentTypeBtc {
   return val.btc !== undefined && val.btc
 }
@@ -225,8 +233,8 @@ export const ContractView: FC<ContractViewProps> = (
 
   return (
     <Box sx={{ width: '60%', marginTop: '1.5rem' }}>
-      <Typography variant="h4" color="textPrimary">
-        {contractId}
+      <Typography margin="2px 0px" variant="h4" color="textPrimary">
+        {truncateContractID(contractId)}
       </Typography>
       <Box
         sx={{
@@ -235,7 +243,7 @@ export const ContractView: FC<ContractViewProps> = (
           margin: '1rem 0rem',
         }}
       />
-      <Grid container spacing={3}>
+      <Grid margin="2px 0px" container spacing={3}>
         {getDisplayContent()}
       </Grid>
       <Box

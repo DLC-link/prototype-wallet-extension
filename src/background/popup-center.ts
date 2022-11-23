@@ -1,6 +1,6 @@
 
-const POPUP_CENTER_WIDTH = 600;
-const POPUP_CENTER_HEIGHT = 700;
+const POPUP_CENTER_WIDTH = 357;
+const POPUP_CENTER_HEIGHT = 600;
 
 interface PopupOptions {
   url?: string;

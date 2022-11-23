@@ -29,7 +29,7 @@ export const NewAddressDialog: FC = () => {
         variant="outlined"
         onClick={handleClickOpen}
       >
-        <Typography fontSize="12px" color="inherit">Get receiving address</Typography>
+        Get receiving address
       </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle style={{ textAlign: 'center' }}>

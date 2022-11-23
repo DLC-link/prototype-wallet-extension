@@ -1,6 +1,6 @@
 import React from 'react'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
-import { Box, IconButton, Typography, Stack, Grid, Link, } from '@mui/material'
+import { Box, IconButton, Typography, Stack, Grid, Link } from '@mui/material'
 import { DateTime } from 'luxon'
 import MUIDataTable, {
   MUIDataTableProps,
@@ -11,8 +11,10 @@ import MUIDataTable, {
 import numbro from 'numbro'
 import { FC, ReactElement, useEffect, useState } from 'react'
 import { ContractState } from 'dlc-lib'
-import { AnyContract } from 'dlc-lib'
 import { useSnackbar } from '../../../providers/Snackbar'
+import { AnyContract } from 'dlc-lib'
+import { Transaction } from 'bitcoinjs-lib'
+import Config from '../../../config'
 
 export type DataGridProps = Omit<
   MUIDataTableProps,
@@ -268,6 +270,28 @@ const DataGrid: FC<DataGridProps> = (props: DataGridProps) => {
         },
       },
     },
+    {
+      name: 'fundTransaction',
+      label: 'Fund Transaction',
+      options: {
+        sort: true,
+        customBodyRenderLite: (dataIndex: number): ReactElement => {
+          const contract = localData[dataIndex]
+          console.log(contract.state)
+          if (contract.state == ContractState.Broadcast) {
+            const fundTxId = Transaction.fromHex(
+              contract.dlcTransactions.fund
+            ).getId()
+            const blockchainLink =
+              Config.blockchainExplorerBaseUrl + `tx/${fundTxId}`
+            console.log('fundTxId: ' + fundTxId)
+            console.log('blockchainLink: ' + blockchainLink)
+            return <Link href={blockchainLink}>Fund Transaction</Link>
+          }
+        },
+      },
+    },
+
     // {
     //   name: 'contractMaturityBound',
     //   label: 'Maturity Time',
