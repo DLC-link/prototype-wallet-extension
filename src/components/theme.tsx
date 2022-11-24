@@ -1,27 +1,20 @@
 import { createTheme } from '@mui/material/styles'
 
-const colorPrimary = '#3AF3B1'
-const colorPrimaryLight = '#69F8C4'
-const colorPrimaryDark = '#09E998'
-const colorSecondary = '#E4E7EF'
-const colorSecondaryLight = '#FFFFFF'
-const colorSecondaryDark = '#B3B6C2'
-const colorBackground = '#3A4473'
-const fgPrimary = '#E4E7EF'
-const fgSecondary = '#A2A6B4'
-const iconColor = fgPrimary
+
+const colorPrimary = '#f2a900'
+const colorSecondary = '#ffffff'
+const colorBackground = '#ffffff'
+const fgPrimary = '#ffffff'
+const fgSecondary = '#4d4d4e'
+const iconColor = '#ffffff'
 
 const theme = createTheme({
   palette: {
     primary: {
-      light: colorPrimaryLight,
       main: colorPrimary,
-      dark: colorPrimaryDark,
     },
     secondary: {
-      light: colorSecondaryLight,
       main: colorSecondary,
-      dark: colorSecondaryDark,
     },
     background: {
       default: colorBackground,
@@ -40,10 +33,10 @@ const theme = createTheme({
       styleOverrides: {
         underline: {
           '&:before': {
-            borderBottomColor: fgSecondary,
+            borderBottomColor: colorPrimary,
           },
           '&:after': {
-            borderBottomColor: colorSecondaryLight,
+            borderBottomColor: colorSecondary,
           },
         },
       },
@@ -51,8 +44,8 @@ const theme = createTheme({
     MuiButton: {
       styleOverrides: {
         disabled: {
-          backgroundColor: '#686E82',
-          color: fgSecondary,
+          backgroundColor: colorBackground,
+          color: fgPrimary,
         },
       },
     },

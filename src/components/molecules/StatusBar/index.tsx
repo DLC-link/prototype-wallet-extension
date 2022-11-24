@@ -15,36 +15,13 @@ import { NewAddressDialog } from '../../organisms/NewAddressDialog'
 
 import p2plogo from '../../../assets/dlclinklogo.svg'
 import { BtcDisplay } from '../../atoms/BtcDisplay'
-import { fontFamily, height } from '@mui/system'
+import theme from "../../../../src/components/theme"
 
 type StatusBarProps = {
   balance: number
   isLoading: boolean
   refresh: () => void
 }
-
-const theme = createTheme({
-
-  palette: {
-    primary: {
-      light: "#f7931a",
-      main: "#f7931a",
-      dark: "#f7931a",
-    },
-    secondary: {
-      light: "#ffffff",
-      main: "#ffffff",
-      dark: "#ffffff",
-    },
-    background: {
-      default: "#f7931a"
-    },
-    text: {
-      primary: "#ffffff",
-      secondary: "#ffffff",
-    },
-  },
-})
 
 const StatusBar: FC<StatusBarProps> = (props: StatusBarProps) => {
   return (
@@ -71,12 +48,12 @@ const StatusBar: FC<StatusBarProps> = (props: StatusBarProps) => {
                 sx={{
                   marginRight: '0.5rem',
                   '& .MuiLoadingButton-loadingIndicator': {
-                    color: 'white',
+                    color: "#ffffff",
                   },
                 }}
                 size="small"
                 loading={props.isLoading}
-                color="inherit"
+                color="secondary"
                 variant="text"
                 onClick={props.refresh}
               >
