@@ -26,28 +26,34 @@ export type DataGridProps = Omit<
   onRowClick?: (dataIndex: number) => void
 }
 
+const colorPrimary = '#ffffff'
+const colorSecondary = '#4d4d4e'
+const colorBackgroundPrimary = '#f2a900'
+const colorBackgroundSecondary = '#4d4d4e'
+const iconColor = '#f2a900'
+
 const theme = createTheme({
+  typography: {
+    fontFamily: "'Poppins', sans-serif"
+  },
+
   palette: {
     primary: {
-      light: "#f7931a",
-      main: "#f7931a",
-      dark: "#f7931a",
+      main: colorPrimary,
     },
     secondary: {
-      light: "#0d579b",
-      main: "#0d579b",
-      dark: "#0d579b",
+      main: colorSecondary,
     },
     background: {
-      default: "#ffffff",
-      paper: "#ffffff",
+      default: colorBackgroundPrimary,
+      paper: colorBackgroundSecondary,
     },
     text: {
-      primary: "#0d579b",
-      secondary: "#4d4d4d",
+      primary: colorPrimary,
+      secondary: colorSecondary,
     },
     action: {
-      active: "#f7931a",
+      active: iconColor,
     },
   },
 
@@ -283,7 +289,7 @@ const DataGrid: FC<DataGridProps> = (props: DataGridProps) => {
               blockChaineExplorerBaseUrl + `tx/${fundTxId}`
             console.log('fundTxId: ' + fundTxId)
             console.log('blockchainLink: ' + blockchainLink)
-            return <Button size="small" onClick={() => openNewTab(blockchainLink)}><PaymentsIcon color="inherit"></PaymentsIcon></Button>
+            return <Button size="small" onClick={() => openNewTab(blockchainLink)}><PaymentsIcon color="action"></PaymentsIcon></Button>
           }
         },
       },

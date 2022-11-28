@@ -15,13 +15,39 @@ import { NewAddressDialog } from '../../organisms/NewAddressDialog'
 
 import p2plogo from '../../../assets/dlclinklogo.svg'
 import { BtcDisplay } from '../../atoms/BtcDisplay'
-import theme from "../../../../src/components/theme"
 
 type StatusBarProps = {
   balance: number
   isLoading: boolean
   refresh: () => void
 }
+
+const colorPrimary = '#f2a900'
+const colorSecondary = '#4d4d4e'
+const colorBackground = '#ffffff'
+const iconColor = '#4d4d4e'
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: colorPrimary,
+    },
+    secondary: {
+      main: colorSecondary,
+    },
+    background: {
+      default: colorBackground,
+      paper: colorBackground,
+    },
+    text: {
+      primary: colorPrimary,
+      secondary: colorSecondary,
+    },
+    action: {
+      active: iconColor,
+    },
+  },
+})
 
 const StatusBar: FC<StatusBarProps> = (props: StatusBarProps) => {
   return (
@@ -48,7 +74,7 @@ const StatusBar: FC<StatusBarProps> = (props: StatusBarProps) => {
                 sx={{
                   marginRight: '0.5rem',
                   '& .MuiLoadingButton-loadingIndicator': {
-                    color: "#ffffff",
+                    color: "#4d4d4e",
                   },
                 }}
                 size="small"

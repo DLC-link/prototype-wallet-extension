@@ -46,7 +46,7 @@ const ContractDetailTemplate: FC<ContractDetailTemplateProps> = (
         width: '100%',
         display: 'flex',
         flexDirection: 'column',
-        backgroundColor: '#303855',
+        backgroundColor: '#4d4d4e',
       }}
     >
       <MainLayout>

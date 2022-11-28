@@ -1,12 +1,11 @@
 import { createTheme } from '@mui/material/styles'
 
-
 const colorPrimary = '#f2a900'
-const colorSecondary = '#ffffff'
+const colorSecondary = '#4d4d4e'
+const colorTextPrimary = '#ffffff'
+const colorTextSecondary = '#4d4d4e'
 const colorBackground = '#ffffff'
-const fgPrimary = '#ffffff'
-const fgSecondary = '#4d4d4e'
-const iconColor = '#ffffff'
+const iconColor = '#4d4d4e'
 
 const theme = createTheme({
   palette: {
@@ -21,35 +20,13 @@ const theme = createTheme({
       paper: colorBackground,
     },
     text: {
-      primary: fgPrimary,
-      secondary: fgSecondary,
+      primary: colorTextPrimary,
+      secondary: colorTextSecondary,
     },
     action: {
       active: iconColor,
     },
   },
-  components: {
-    MuiInput: {
-      styleOverrides: {
-        underline: {
-          '&:before': {
-            borderBottomColor: colorPrimary,
-          },
-          '&:after': {
-            borderBottomColor: colorSecondary,
-          },
-        },
-      },
-    },
-    MuiButton: {
-      styleOverrides: {
-        disabled: {
-          backgroundColor: colorBackground,
-          color: fgPrimary,
-        },
-      },
-    },
-  },
 })
 
-export default theme
+export default theme;

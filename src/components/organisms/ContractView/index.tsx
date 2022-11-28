@@ -232,18 +232,17 @@ export const ContractView: FC<ContractViewProps> = (
     'id' in contract ? contract.id : contract.temporaryContractId
 
   return (
-    <Box sx={{ width: '60%', marginTop: '1.5rem' }}>
-      <Typography margin="2px 0px" variant="h4" color="textPrimary">
+    <Box alignItems="center" sx={{ flex: 1, backgroundColor: "#4d4d4e", width: '100%' }}>
+      <Typography padding="25px" variant="h4" color="textPrimary">
         {truncateContractID(contractId)}
       </Typography>
       <Box
         sx={{
-          width: '48rem',
+          width: '100%',
           borderBottom: '1px solid #B3B6C2',
-          margin: '1rem 0rem',
         }}
       />
-      <Grid margin="2px 0px" container spacing={3}>
+      <Grid padding="25px" justifyItems="center" direction="column" container spacing={3}>
         {getDisplayContent()}
       </Grid>
       <Box
@@ -251,6 +250,7 @@ export const ContractView: FC<ContractViewProps> = (
           display: 'flex',
           justifyContent: 'space-evenly',
           marginTop: '3rem',
+          marginBottom: '3rem'
         }}
       >
         {isProposal && (

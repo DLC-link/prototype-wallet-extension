@@ -32,7 +32,7 @@ const ContractListTemplate: FC<ContractListTemplateProps> = (
         width: '100%',
         display: 'flex',
         flexDirection: 'column',
-        backgroundColor: "#f7931a",
+        backgroundColor: "#ffffff",
       }}
     >
       <MainLayout>
@@ -52,7 +52,6 @@ const ContractListTemplate: FC<ContractListTemplateProps> = (
           />
         </Box>
       </MainLayout>
-      {/* <Button onClick={props.onAcceptOfferClicked}>Accept Offer</Button> */}
     </Box>
   )
 }

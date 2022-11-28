@@ -16,36 +16,39 @@ export type DataGridProps = Omit<
   data: AnyContract
 }
 
+const colorPrimary = '#ffffff'
+const colorSecondary = '#4d4d4e'
+const colorBackgroundPrimary = '#f2a900'
+const colorBackgroundSecondary = '#4d4d4e'
+const iconColor = '#f2a900'
+
 const theme = createTheme({
   palette: {
     primary: {
-      light: '#E4E7EF',
-      main: '#E4E7EF', // '#3AF3B1',
-      dark: '#E4E7EF',
+      main: colorPrimary,
     },
     secondary: {
-      light: '#FFFFFF',
-      main: '#E4E7EF',
-      dark: '#B3B6C2',
+      main: colorSecondary,
     },
     background: {
-      default: '#3A4473',
-      paper: '#3A4473',
+      default: colorBackgroundPrimary,
+      paper: colorBackgroundSecondary,
     },
     text: {
-      primary: '#E4E7EF',
-      secondary: '#A2A6B4',
+      primary: colorPrimary,
+      secondary: colorSecondary,
     },
     action: {
-      active: '#E4E7EF',
+      active: iconColor,
     },
   },
+
   components: {
     MuiInput: {
       styleOverrides: {
         underline: {
           '&:before': {
-            borderBottomColor: '#E4E7EF',
+            borderBottomColor: 'background',
           },
         },
       },
@@ -54,10 +57,10 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           '&$selected': {
-            backgroundColor: 'rgb(255, 255, 255, 0.05)',
+            backgroundColor: 'secondary',
           },
           '&$hover:hover': {
-            backgroundColor: 'rgb(255, 255, 255, 0.1)',
+            backgroundColor: 'primary',
           },
         },
       },
@@ -70,7 +73,16 @@ const theme = createTheme({
         },
       },
     },
+    MUIDataTableHead: {
+      root: {
+        backgroundColor: 'white',
+        borderBottom: 'none',
+      },
+    },
     MUIDataTableToolbar: {
+      root: {
+        backgroundColor: 'white',
+      },
       actions: {
         display: 'flex',
         alignItems: 'end',
