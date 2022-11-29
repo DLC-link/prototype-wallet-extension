@@ -174,12 +174,12 @@ export const ContractView: FC<ContractViewProps> = (
       value: contract.feeRatePerVByte.toString(),
     },
     {
-      title: 'Offer Collateral',
-      value: contract.offerParams.collateral,
-      btc: true,
-    },
-    {
-      title: 'Accept Collateral',
+    //   title: 'Offer Collateral',
+    //   value: contract.offerParams.collateral,
+    //   btc: true,
+    // },
+    // {
+      title: 'Collateral',
       value:
         contract.contractInfo.totalCollateral - contract.offerParams.collateral,
       btc: true,

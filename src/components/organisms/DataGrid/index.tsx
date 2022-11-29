@@ -1,7 +1,7 @@
 import React from 'react'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { Box, IconButton, Typography, Stack, Grid, Link, Button } from '@mui/material'
-import PaymentsIcon from '@mui/icons-material/Payments';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { DateTime } from 'luxon'
 import MUIDataTable, {
   MUIDataTableProps,
@@ -241,22 +241,22 @@ const DataGrid: FC<DataGridProps> = (props: DataGridProps) => {
     //     ),
     //   },
     // },
-    {
-      name: 'offerCollateral',
-      label: 'Offer Collateral',
-      options: {
-        sort: true,
-        customBodyRenderLite: (dataIndex: number): ReactElement => {
-          const contract = localData[dataIndex]
-          return (
-            <span>{toCollateralString(contract.offerParams.collateral)}</span>
-          )
-        },
-      },
-    },
+    // {
+    //   name: 'offerCollateral',
+    //   label: 'Offer Collateral',
+    //   options: {
+    //     sort: true,
+    //     customBodyRenderLite: (dataIndex: number): ReactElement => {
+    //       const contract = localData[dataIndex]
+    //       return (
+    //         <span>{toCollateralString(contract.offerParams.collateral)}</span>
+    //       )
+    //     },
+    //   },
+    // },
     {
       name: 'acceptCollateral',
-      label: 'Accept Collateral',
+      label: 'Collateral',
       options: {
         sort: true,
         customBodyRenderLite: (dataIndex: number): ReactElement => {
@@ -289,7 +289,7 @@ const DataGrid: FC<DataGridProps> = (props: DataGridProps) => {
               blockChaineExplorerBaseUrl + `tx/${fundTxId}`
             console.log('fundTxId: ' + fundTxId)
             console.log('blockchainLink: ' + blockchainLink)
-            return <Button size="small" onClick={() => openNewTab(blockchainLink)}><PaymentsIcon color="action"></PaymentsIcon></Button>
+            return <Button size="small" onClick={() => openNewTab(blockchainLink)}><OpenInNewIcon color="action"></OpenInNewIcon></Button>
           }
         },
       },
