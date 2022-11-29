@@ -32,12 +32,13 @@ const ContractListTemplate: FC<ContractListTemplateProps> = (
         width: '100%',
         display: 'flex',
         flexDirection: 'column',
-        backgroundColor: '#303855',
+        backgroundColor: "#ffffff",
       }}
     >
       <MainLayout>
         <Box
           sx={{
+            borderRadius: "large",
             height: '100%',
             display: 'flex',
             flexDirection: 'column',
@@ -51,8 +52,6 @@ const ContractListTemplate: FC<ContractListTemplateProps> = (
           />
         </Box>
       </MainLayout>
-      <NewAddressDialog />
-      <Button onClick={props.onAcceptOfferClicked}>Accept Offer</Button>
     </Box>
   )
 }

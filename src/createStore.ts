@@ -1,9 +1,8 @@
 import { createHashHistory } from 'history'
-import { applyMiddleware, Store } from 'redux'
 import { configureStore } from '@reduxjs/toolkit'
 
 import createSagaMiddleware from 'redux-saga'
-import { ApplicationState, rootReducer, rootSaga } from './store'
+import { rootReducer, rootSaga } from './store'
 import { DlcService } from './services/dlcService'
 import {
   ElectrsBlockchain,
@@ -14,6 +13,7 @@ import {
 import Config from './config'
 import { ChromeRepository } from './persistence/chromeRepository'
 import { LocalRepository } from './persistence/localRepository'
+import logger from 'redux-logger'
 
 export const history = createHashHistory()
 
@@ -34,7 +34,7 @@ const sagaMiddleware = createSagaMiddleware({
 const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().prepend(sagaMiddleware),
+    getDefaultMiddleware().prepend(sagaMiddleware).prepend(logger),
 })
 
 sagaMiddleware.run(rootSaga)

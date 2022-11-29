@@ -20,7 +20,7 @@ export function* handleContracts(): SagaIterator {
     const contracts = yield call([dlcAPI, dlcAPI.getAllContracts])
     yield put(contractSuccess(contracts))
   } catch (err) {
-    yield put(contractError('An unknown error occured.'))
+    yield put(contractError('HandleContracts Effect Failure.'))
   }
 }
 
@@ -36,7 +36,7 @@ export function* handleOffer(
 
     yield put(dlcActionSuccess(answer))
   } catch {
-    yield put(dlcActionError({ error: 'An unknown error occured.' }))
+    yield put(dlcActionError({ error: 'HandleOffer Effect Failure.'}))
   }
 }
 
@@ -51,7 +51,7 @@ export function* handleAccept(
     )) as AnyContract
     yield put(dlcActionSuccess(answer))
   } catch (err) {
-    yield put(dlcActionError({ error: 'An unknown error occured.' }))
+    yield put(dlcActionError({ error: 'HandleAccept Effect Failure.', contractID: action.payload }))
   }
 }
 
@@ -66,7 +66,7 @@ export function* handleReject(
     )) as AnyContract
     yield put(dlcActionSuccess(answer))
   } catch (err) {
-    yield put(dlcActionError({ error: 'An unknown error occured.' }))
+    yield put(dlcActionError({ error: 'HandleReject Effect Failure.', contractID: action.payload }))
   }
 }
 
@@ -81,7 +81,7 @@ export function* handleSign(
     )) as AnyContract
     yield put(dlcActionSuccess(answer))
   } catch (err) {
-    yield put(dlcActionError({ error: 'An unknown error occured' }))
+    yield put(dlcActionError({ error: `HandleSign Effect Failure. Message was: ${action.payload}` }))
   }
 }
 

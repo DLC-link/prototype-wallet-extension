@@ -19,8 +19,9 @@ export const rejectRequest = (contractId: string) =>
 export const dlcActionSuccess = (contract: AnyContract) =>
   action(DlcActionTypes.DLC_ACTION_SUCCESS, contract)
 export const dlcActionError = (error: {
-  error: string
-  contract?: AnyContract
+  error: string,
+  contract?: AnyContract,
+  contractID?: string
 }) => action(DlcActionTypes.DLC_ACTION_ERROR, error)
 export const dlcSelectContract = (contract?: AnyContract) =>
   action(DlcActionTypes.DLC_SELECT, contract)
