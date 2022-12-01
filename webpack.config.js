@@ -20,7 +20,7 @@ module.exports = {
       patterns: [
         path.join(__dirname, '/public/manifest.json'),
         path.join(__dirname, '/public/dlclinkicon.png'),
-        path.join(__dirname, '/public/DLC.Link_Emoji.png'),
+        path.join(__dirname, '/public/BTC.png'),
         path.join(__dirname, '/public/favicon.ico'),
         path.join(__dirname, '/public/index.html'),
         path.join(__dirname, '/public/popup-center.html')

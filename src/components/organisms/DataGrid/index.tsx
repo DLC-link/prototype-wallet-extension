@@ -61,6 +61,10 @@ const theme = createTheme({
     MuiTableRow: {
       styleOverrides: {
         root: {
+          '&': {
+            borderTop: "10px solid rgba(0, 0, 0, 0.6)!important",
+            borderBottom: "10px solid rgba(0, 0, 0, 0.6)!important",
+          },
           '&$selected': {
             backgroundColor: "",
           },

@@ -13,7 +13,7 @@ import { Refresh } from '@mui/icons-material'
 import { LoadingButton } from '@mui/lab'
 import { NewAddressDialog } from '../../organisms/NewAddressDialog'
 
-import p2plogo from '../../../assets/dlclinklogo.svg'
+import p2plogo from '../../../assets/Bitcoin.svg'
 import { BtcDisplay } from '../../atoms/BtcDisplay'
 
 type StatusBarProps = {
