@@ -1,8 +1,7 @@
 import React from 'react'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
-import { Box, IconButton, Typography, Stack, Grid, Link, Button } from '@mui/material'
+import { Typography, Grid, Link, Button } from '@mui/material'
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
-import { DateTime } from 'luxon'
 import MUIDataTable, {
   MUIDataTableProps,
   Responsive,
@@ -15,8 +14,6 @@ import { ContractState } from 'dlc-lib'
 import { useSnackbar } from '../../../providers/Snackbar'
 import { AnyContract } from 'dlc-lib'
 import { Transaction } from 'bitcoinjs-lib'
-import Config from '../../../config'
-import { contractError } from '../../../store/dlc/actions';
 
 export type DataGridProps = Omit<
   MUIDataTableProps,

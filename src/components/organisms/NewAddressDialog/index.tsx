@@ -10,7 +10,7 @@ import ContactEmergencyIcon from '@mui/icons-material/ContactEmergency'
 import { IconButton, createTheme } from '@mui/material'
 import { useSnackbar } from '../../../providers/Snackbar'
 import ContentCopyIcon from '@mui/icons-material/ContentCopy'
-import { Box, Stack, ThemeProvider } from '@mui/system'
+import { Stack, ThemeProvider } from '@mui/system'
 
 export const NewAddressDialog: FC = () => {
   const addressContext = useAddressContext()
