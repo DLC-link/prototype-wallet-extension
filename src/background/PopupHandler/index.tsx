@@ -5,10 +5,6 @@ import {
   useSelector as useReduxSelector,
 } from 'react-redux'
 import {
-  MemoryRouter,
-  Routes,
-  Route,
-  useLocation,
   useNavigate,
 } from 'react-router-dom';
 import { useSnackbar } from '../../providers/Snackbar'
