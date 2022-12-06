@@ -151,6 +151,16 @@ export const ContractView: FC<ContractViewProps> = (
 
   const handleAccept = (): void => {
     props.acceptContract()
+    async () => {
+      const [tab] = await chrome.tabs.query({
+        active: true,
+        lastFocusedWindow: true,
+      })
+      const response = await chrome.tabs.sendMessage(tab.id, {
+        success: true,
+      })
+      console.log(response)
+    };
   }
 
   const handleReject = (): void => {
@@ -174,11 +184,11 @@ export const ContractView: FC<ContractViewProps> = (
       value: contract.feeRatePerVByte.toString(),
     },
     {
-    //   title: 'Offer Collateral',
-    //   value: contract.offerParams.collateral,
-    //   btc: true,
-    // },
-    // {
+      //   title: 'Offer Collateral',
+      //   value: contract.offerParams.collateral,
+      //   btc: true,
+      // },
+      // {
       title: 'Collateral',
       value:
         contract.contractInfo.totalCollateral - contract.offerParams.collateral,
@@ -232,7 +242,10 @@ export const ContractView: FC<ContractViewProps> = (
     'id' in contract ? contract.id : contract.temporaryContractId
 
   return (
-    <Box alignItems="center" sx={{ flex: 1, backgroundColor: "#4d4d4e", width: '100%' }}>
+    <Box
+      alignItems="center"
+      sx={{ flex: 1, backgroundColor: '#4d4d4e', width: '100%' }}
+    >
       <Typography padding="25px" variant="h4" color="textPrimary">
         {truncateContractID(contractId)}
       </Typography>
@@ -242,7 +255,13 @@ export const ContractView: FC<ContractViewProps> = (
           borderBottom: '1px solid #B3B6C2',
         }}
       />
-      <Grid padding="25px" justifyItems="center" direction="column" container spacing={3}>
+      <Grid
+        padding="25px"
+        justifyItems="center"
+        direction="column"
+        container
+        spacing={3}
+      >
         {getDisplayContent()}
       </Grid>
       <Box
@@ -250,7 +269,7 @@ export const ContractView: FC<ContractViewProps> = (
           display: 'flex',
           justifyContent: 'space-evenly',
           marginTop: '3rem',
-          marginBottom: '3rem'
+          marginBottom: '3rem',
         }}
       >
         {isProposal && (
