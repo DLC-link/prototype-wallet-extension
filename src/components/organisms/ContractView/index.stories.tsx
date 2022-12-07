@@ -1,7 +1,5 @@
 import React from 'react'
 import { ContractView } from '.'
-import { ThemeProvider } from '@mui/material/styles'
-import theme from '../../theme'
 import { contracts } from '../../stories-data/contracts'
 import { action } from '@storybook/addon-actions'
 import { ComponentStory } from '@storybook/react'
@@ -35,7 +33,6 @@ export default {
 }
 
 const Template: ComponentStory<typeof ContractView> = (args: any) => (
-  <ThemeProvider theme={theme}>
     <div style={{ width: 1366, height: 768 }}>
       <div style={{ height: '100%' }}>
         <ContractView
@@ -47,7 +44,6 @@ const Template: ComponentStory<typeof ContractView> = (args: any) => (
         />
       </div>
     </div>
-  </ThemeProvider>
 )
 
 export const Display = Template.bind({})

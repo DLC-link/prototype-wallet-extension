@@ -28,25 +28,22 @@ const ContractListTemplate: FC<ContractListTemplateProps> = (
   return (
     <Box
       sx={{
-        height: '100%',
-        width: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        backgroundColor: "#ffffff",
+        width: "357px", 
+        height: "600px",
       }}
     >
       <MainLayout>
         <Box
           sx={{
-            borderRadius: "large",
             height: '100%',
+            width: "100%",
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'space-between',
           }}
         >
           <DataGrid
-            title={'All'}
+            title={"Discreet Log Contracts"}
             data={contractData}
             onRowClick={handleRowClicked}
           />

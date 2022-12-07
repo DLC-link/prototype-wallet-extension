@@ -122,7 +122,7 @@ const ContractDetailPage: FC = () => {
   }
 
   return (
-    <div style={{ width: "357px", height: "600px" }} className="contractdetailsdiv">
+    <div style={{ width: "357px", height: "full" }}>
       {contract !== undefined && (
         <ContractDetailTemplate
           data={contract}

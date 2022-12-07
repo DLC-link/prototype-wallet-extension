@@ -15,6 +15,7 @@ import {
 import ContractListTemplate from '../../templates/ContractListTemplate'
 import { randomBytes as rand } from 'crypto'
 import { useNavigate } from 'react-router-dom'
+import { Box } from '@mui/system'
 
 
 export function randomBytes(byteCount: number) {
@@ -52,7 +53,7 @@ const ContractOverviewPage: FC = () => {
   }
 
   return (
-    <div style={{ backgroundColor: "#ffffff", width: "357px", height: "600px" }}>
+    <>
       {
         <ContractListTemplate
           data={contracts}
@@ -60,7 +61,7 @@ const ContractOverviewPage: FC = () => {
           onAcceptOfferClicked={handleAcceptOfferClicked}
         />
       }
-    </div>
+    </>
   )
 }
 

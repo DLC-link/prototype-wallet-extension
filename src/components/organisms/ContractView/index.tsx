@@ -1,14 +1,14 @@
 import React from 'react'
-import { Grid, Link, Typography } from '@mui/material'
+import { Table, TableRow, TableCell, Typography } from '@mui/material'
 import { DateTime } from 'luxon'
-import { FC, ReactElement, useEffect, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { ContractState } from 'dlc-lib'
-import { BtcDisplay } from '../../atoms/BtcDisplay'
 import { Box } from '@mui/system'
 import { Button } from '@mui/material'
 import { AnyContract } from 'dlc-lib'
 import { Transaction } from 'bitcoinjs-lib'
 import Config from '../../../config'
+import OpenInNewIcon from '@mui/icons-material/OpenInNew'
 
 export type ContractViewProps = {
   data: AnyContract
@@ -16,29 +16,6 @@ export type ContractViewProps = {
   rejectContract: () => void
   cancel: () => void
   availableAmount: number
-}
-
-type ContentType = ContentTypeString | ContentTypeBtc | ContentTypeLink
-
-type ContentTypeString = {
-  title: string
-  value: string
-  btc?: boolean
-}
-
-type ContentTypeLink = {
-  title: string
-  value: string
-  btc: undefined
-  isLink: true
-}
-
-type ContentTypeBtc = {
-  title: string
-  value: number
-  btc: boolean
-  addOwn?: boolean
-  pnlColors?: boolean
 }
 
 function truncateContractID(contractID: string) {
@@ -49,97 +26,62 @@ function truncateContractID(contractID: string) {
   )
 }
 
-function isBtc(val: ContentType): val is ContentTypeBtc {
-  return val.btc !== undefined && val.btc
-}
-
-function isLink(val: ContentType): val is ContentTypeLink {
-  return 'isLink' in val
-}
-
-function getGridItem(
-  title: string,
-  content: ReactElement,
-  dataTitle: string,
-  key: number
-): ReactElement {
-  return (
-    <Grid key={key} item xs={4}>
-      <div>
-        <Typography variant="body2" color="textPrimary">
-          {title}
-        </Typography>
-        {content}
-      </div>
-    </Grid>
-  )
-}
-
-function getLinkGridItem(
-  title: string,
-  link: string,
-  dataTitle: string,
-  key: number
-): ReactElement {
-  const reactElement = <Link href={link}>Fund transaction</Link>
-  return getGridItem(title, reactElement, dataTitle, key)
-}
-
-function getTypographyGridItem(
-  title: string,
-  content: string,
-  dataTitle: string,
-  key: number
-): ReactElement {
-  const reactElement = (
-    <Typography variant="body2" color="textPrimary">
-      {content}
-    </Typography>
-  )
-
-  return getGridItem(title, reactElement, dataTitle, key)
-}
-
-function getBtcDisplayGridItem(
-  title: string,
-  satValue: number,
-  dataTitle: string,
-  key: number,
-  addOwn?: boolean,
-  pnlColors?: boolean
-): ReactElement {
-  const reactElement = (
-    <>
-      <BtcDisplay
-        pnlcolors={pnlColors}
-        satvalue={satValue}
-        currency="BTC"
-        variant="body2"
-      />
-      {addOwn && (
-        <Typography variant="body2" color="textPrimary">
-          (own)
-        </Typography>
-      )}
-    </>
-  )
-
-  return getGridItem(title, reactElement, dataTitle, key)
+function openNewTab(blockChainLink: any) {
+  window.open(blockChainLink, '_blank')
 }
 
 export const ContractView: FC<ContractViewProps> = (
   props: ContractViewProps
 ) => {
+  const [isLoading, setLoading] = useState(true)
   const [contract, setContract] = useState(props.data)
   const [isProposal, setIsProposal] = useState(false)
   const [canAccept, setCanAccept] = useState(
     props.availableAmount >=
       contract.contractInfo.totalCollateral - contract.offerParams.collateral
   )
+  const [formattedContract, setFormattedContract] = useState(null)
+  const [blockChainLink, setBlockChainLink] = useState(null)
+
+  const createAndSetFormattedContract = (contract: AnyContract) => {
+    const contractMaturityBound = contract.contractMaturityBound
+    const zone = { zone: 'utc' }
+    const dateTimeFormat = 'yyyy-LL-dd HH:mm:ss'
+    const contractID =
+      'id' in contract ? contract.id : contract.temporaryContractId
+
+    const formattedContract = {
+      state: ContractState[contract.state],
+      ID: truncateContractID(contractID),
+      maturityDate: DateTime.fromSeconds(contractMaturityBound, zone).toFormat(
+        dateTimeFormat
+      ),
+      feeRate: contract.feeRatePerVByte,
+      collateral:
+        contract.contractInfo.totalCollateral - contract.offerParams.collateral,
+    }
+    console.log(formattedContract)
+    setFormattedContract(formattedContract)
+  }
+
+  const getAndSetBlockChainLink = () => {
+    if (contract.state == ContractState.Broadcast) {
+      const fundTxId = Transaction.fromHex(
+        contract.dlcTransactions.fund
+      ).getId()
+      const blockChainLink = Config.blockchainExplorerBaseUrl + `tx/${fundTxId}`
+      setBlockChainLink(blockChainLink)
+    } else {
+      setBlockChainLink(null)
+    }
+  }
 
   useEffect(() => {
     setContract(props.data)
+    createAndSetFormattedContract(props.data)
+    getAndSetBlockChainLink()
     setIsProposal(contract.state === ContractState.Offered)
+    setLoading(false)
   }, [contract, setContract, props.data])
 
   useEffect(() => {
@@ -151,16 +93,6 @@ export const ContractView: FC<ContractViewProps> = (
 
   const handleAccept = (): void => {
     props.acceptContract()
-    async () => {
-      const [tab] = await chrome.tabs.query({
-        active: true,
-        lastFocusedWindow: true,
-      })
-      const response = await chrome.tabs.sendMessage(tab.id, {
-        success: true,
-      })
-      console.log(response)
-    };
   }
 
   const handleReject = (): void => {
@@ -171,128 +103,85 @@ export const ContractView: FC<ContractViewProps> = (
     if (props.cancel) props.cancel()
   }
 
-  let content: ContentType[] = [
-    { title: 'State', value: ContractState[contract.state] },
-    {
-      title: 'Maturity Date',
-      value: DateTime.fromMillis(contract.contractMaturityBound * 1000, {
-        zone: 'utc',
-      }).toLocaleString(DateTime.DATETIME_FULL),
-    },
-    {
-      title: 'Fee Rate (satoshi/vbytes)',
-      value: contract.feeRatePerVByte.toString(),
-    },
-    {
-      //   title: 'Offer Collateral',
-      //   value: contract.offerParams.collateral,
-      //   btc: true,
-      // },
-      // {
-      title: 'Collateral',
-      value:
-        contract.contractInfo.totalCollateral - contract.offerParams.collateral,
-      btc: true,
-    },
-    {
-      title: 'Available Amount',
-      value: props.availableAmount,
-      btc: true,
-    },
-  ]
-
-  if (contract.state == ContractState.Broadcast) {
-    const fundTxId = Transaction.fromHex(contract.dlcTransactions.fund).getId()
-    const blockchainLink = Config.blockchainExplorerBaseUrl + `tx/${fundTxId}`
-    content.push({
-      title: 'Fund transaction',
-      value: blockchainLink,
-      isLink: true,
-    })
-  }
-
-  const getDisplayContent = (): ReactElement[] => {
-    const gridItems: ReactElement[] = []
-    let key = 0
-    for (const element of content) {
-      if (isBtc(element)) {
-        gridItems.push(
-          getBtcDisplayGridItem(
-            element.title,
-            element.value,
-            '',
-            key,
-            element.addOwn,
-            element.pnlColors
-          )
-        )
-      } else if (isLink(element)) {
-        gridItems.push(getLinkGridItem(element.title, element.value, '', key))
-      } else {
-        gridItems.push(
-          getTypographyGridItem(element.title, element.value, '', key)
-        )
-      }
-      key++
-    }
-    return gridItems
-  }
-
-  const contractId =
-    'id' in contract ? contract.id : contract.temporaryContractId
-
   return (
-    <Box
-      alignItems="center"
-      sx={{ flex: 1, backgroundColor: '#4d4d4e', width: '100%' }}
-    >
-      <Typography padding="25px" variant="h4" color="textPrimary">
-        {truncateContractID(contractId)}
-      </Typography>
-      <Box
-        sx={{
-          width: '100%',
-          borderBottom: '1px solid #B3B6C2',
-        }}
-      />
-      <Grid
-        padding="25px"
-        justifyItems="center"
-        direction="column"
-        container
-        spacing={3}
-      >
-        {getDisplayContent()}
-      </Grid>
+    <Box sx={{ flex: 1, width: '100%' }}>
+      {!isLoading && (
+        <Table sx={{ color: '#ffffff' }}>
+          <TableRow>
+            <TableCell>CONTRACT ID:</TableCell>
+            <TableCell>{formattedContract.ID}</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>STATE:</TableCell>
+            <TableCell>{formattedContract.state}</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>MATURITY DATE:</TableCell>
+            <TableCell>{formattedContract.maturityDate}</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>FEE RATE:</TableCell>
+            <TableCell>{formattedContract.feeRate}</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>COLLATERAL:</TableCell>
+            <TableCell>{formattedContract.collateral}</TableCell>
+          </TableRow>
+          {blockChainLink !== null && (
+            <TableRow>
+              <TableCell>FUNDING TX:</TableCell>
+              <TableCell>
+                <OpenInNewIcon
+                  color="secondary"
+                  onClick={() => openNewTab(blockChainLink)}
+                  sx={[
+                    {
+                      '&:hover': {
+                        cursor: "pointer"
+                      },
+                    },
+                  ]}
+                ></OpenInNewIcon>
+              </TableCell>
+            </TableRow>
+          )}
+        </Table>
+      )}
       <Box
         sx={{
           display: 'flex',
-          justifyContent: 'space-evenly',
-          marginTop: '3rem',
-          marginBottom: '3rem',
+          backgroundColor: '#4d4d4e',
+          justifyContent: 'center',
+          padding: '15px',
         }}
       >
-        {isProposal && (
+        {isProposal ? (
           <>
             <Button
               disabled={!canAccept}
+              sx={{ color: '#4d4d4e' }}
               variant="contained"
-              color="primary"
+              color="secondary"
               onClick={handleAccept}
             >
               Accept
             </Button>
             <Button
+              sx={{ color: '#4d4d4e' }}
               variant="contained"
-              color="secondary"
+              color="primary"
               onClick={handleReject}
             >
               Reject
             </Button>
           </>
-        )}
-        {!isProposal && (
-          <Button variant="contained" color="secondary" onClick={handleCancel}>
+        ) : (
+          <Button
+            sx={{ color: '#4d4d4e' }}
+            variant="contained"
+            color="secondary"
+            onClick={handleCancel}
+          >
             Back
           </Button>
         )}

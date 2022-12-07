@@ -23,86 +23,6 @@ export type DataGridProps = Omit<
   onRowClick?: (dataIndex: number) => void
 }
 
-const colorPrimary = '#ffffff'
-const colorSecondary = '#4d4d4e'
-const colorBackgroundPrimary = '#f2a900'
-const colorBackgroundSecondary = '#4d4d4e'
-const iconColor = '#f2a900'
-
-const theme = createTheme({
-  typography: {
-    fontFamily: "'Poppins', sans-serif"
-  },
-
-  palette: {
-    primary: {
-      main: colorPrimary,
-    },
-    secondary: {
-      main: colorSecondary,
-    },
-    background: {
-      default: colorBackgroundPrimary,
-      paper: colorBackgroundSecondary,
-    },
-    text: {
-      primary: colorPrimary,
-      secondary: colorSecondary,
-    },
-    action: {
-      active: iconColor,
-    },
-  },
-
-  components: {
-    MuiTableRow: {
-      styleOverrides: {
-        root: {
-          '&': {
-            borderTop: "10px solid rgba(0, 0, 0, 0.6)!important",
-            borderBottom: "10px solid rgba(0, 0, 0, 0.6)!important",
-          },
-          '&$selected': {
-            backgroundColor: "",
-          },
-          '&$hover:hover': {
-            backgroundColor: "",
-          },
-        },
-      },
-    },
-    //@ts-ignore
-    MUIDataTable: {
-      paper: {
-        height: 'inherit',
-        overflow: 'none',
-      },
-    },
-    MUIDataTableSelectCell: {
-      root: {
-        display: 'none',
-      },
-    },
-    MUIDataTableToolbar: {
-      actions: {
-        display: 'flex',
-        alignItems: 'end',
-        justifyContent: 'flex-end',
-      },
-    },
-    MuiChip: {
-      styleOverrides: {
-        deleteIcon: {
-          color: '#3A4473',
-          '&:hover': {
-            color: '#4A5B83',
-          },
-        },
-      },
-    },
-  },
-})
-
 function openNewTab(blockChainLink: any) {
   window.open(blockChainLink, "_blank");
 }
@@ -169,14 +89,14 @@ const DataGrid: FC<DataGridProps> = (props: DataGridProps) => {
     selectableRows: 'none' as SelectableRows,
     responsive: 'vertical' as Responsive,
     denseTable: false,
-    // onRowClick: (
-    //   _: any[],
-    //   raw: { dataIndex: number; rowIndex: number }
-    // ): void => {
-    //   if (props.onRowClick) {
-    //     props.onRowClick(raw.dataIndex)
-    //   }
-    // },
+    onRowClick: (
+      _: any[],
+      raw: { dataIndex: number; rowIndex: number }
+    ): void => {
+      if (props.onRowClick) {
+        props.onRowClick(raw.dataIndex)
+      }
+    },
   }
 
   const columns = [
@@ -290,7 +210,7 @@ const DataGrid: FC<DataGridProps> = (props: DataGridProps) => {
               blockChaineExplorerBaseUrl + `tx/${fundTxId}`
             console.log('fundTxId: ' + fundTxId)
             console.log('blockchainLink: ' + blockchainLink)
-            return <Button size="small" onClick={() => openNewTab(blockchainLink)}><OpenInNewIcon color="action"></OpenInNewIcon></Button>
+            return <Button size="small" onClick={() => openNewTab(blockchainLink)}><OpenInNewIcon color="secondary"></OpenInNewIcon></Button>
           }
         },
       },
@@ -313,14 +233,12 @@ const DataGrid: FC<DataGridProps> = (props: DataGridProps) => {
   ]
 
   return (
-    <ThemeProvider theme={theme}>
       <MUIDataTable
         title={props.title}
         data={localData}
         columns={columns}
         options={options}
       />
-    </ThemeProvider>
   )
 }
 

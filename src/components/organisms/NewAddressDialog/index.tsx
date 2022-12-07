@@ -7,10 +7,10 @@ import Typography from '@mui/material/Typography'
 import { FC, useState } from 'react'
 import { useAddressContext } from '../../../providers/AddressProvider'
 import ContactEmergencyIcon from '@mui/icons-material/ContactEmergency'
-import { IconButton, createTheme } from '@mui/material'
+import { IconButton } from '@mui/material'
 import { useSnackbar } from '../../../providers/Snackbar'
 import ContentCopyIcon from '@mui/icons-material/ContentCopy'
-import { Stack, ThemeProvider } from '@mui/system'
+import { Stack } from '@mui/system'
 
 export const NewAddressDialog: FC = () => {
   const addressContext = useAddressContext()
@@ -33,35 +33,8 @@ export const NewAddressDialog: FC = () => {
     snackbar.createSnack('Address copied to clipboard!', 'success')
   }
 
-  const colorPrimary = '#f2a900'
-  const colorSecondary = '#4d4d4e'
-  const colorBackground = '#ffffff'
-  const iconColor = '#4d4d4e'
-
-  const theme = createTheme({
-    palette: {
-      primary: {
-        main: colorPrimary,
-      },
-      secondary: {
-        main: colorSecondary,
-      },
-      background: {
-        default: colorBackground,
-        paper: colorBackground,
-      },
-      text: {
-        primary: colorPrimary,
-        secondary: colorSecondary,
-      },
-      action: {
-        active: iconColor,
-      },
-    },
-  })
-
   return (
-    <ThemeProvider theme={theme}>
+    <>
       <Button
         size="small"
         color="secondary"
@@ -70,8 +43,8 @@ export const NewAddressDialog: FC = () => {
       >
         <ContactEmergencyIcon color="secondary"></ContactEmergencyIcon>
       </Button>
-      <Dialog open={open} onClose={handleClose}>
-        <DialogTitle textAlign="center" color="primary">
+      <Dialog open={open} onClose={handleClose} sx={{ backgroundColor: "#4d4d4e" }}>
+        <DialogTitle textAlign="center" color="secondary">
           Address to fund the wallet
         </DialogTitle>
         <DialogContent dividers>
@@ -81,15 +54,15 @@ export const NewAddressDialog: FC = () => {
             justifyContent="center"
             spacing="15px"
           >
-            <Typography color="primary" fontSize="10px" gutterBottom>
+            <Typography fontSize="10px" gutterBottom>
               {balance}
             </Typography>
             <IconButton size="small" onClick={() => copyToClickBoard(balance)}>
-              <ContentCopyIcon color="primary"></ContentCopyIcon>
+              <ContentCopyIcon color="secondary"></ContentCopyIcon>
             </IconButton>
           </Stack>
         </DialogContent>
       </Dialog>
-    </ThemeProvider>
+      </>
   )
 }

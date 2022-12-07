@@ -2,13 +2,10 @@ import React, { FC } from 'react'
 import {
   AppBar,
   Box,
-  Button,
   Container,
   createTheme,
-  IconButton,
   Toolbar,
 } from '@mui/material'
-import { ThemeProvider } from '@mui/material/styles'
 import { Refresh } from '@mui/icons-material'
 import { LoadingButton } from '@mui/lab'
 import { NewAddressDialog } from '../../organisms/NewAddressDialog'
@@ -22,37 +19,9 @@ type StatusBarProps = {
   refresh: () => void
 }
 
-const colorPrimary = '#f2a900'
-const colorSecondary = '#4d4d4e'
-const colorBackground = '#ffffff'
-const iconColor = '#4d4d4e'
-
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: colorPrimary,
-    },
-    secondary: {
-      main: colorSecondary,
-    },
-    background: {
-      default: colorBackground,
-      paper: colorBackground,
-    },
-    text: {
-      primary: colorPrimary,
-      secondary: colorSecondary,
-    },
-    action: {
-      active: iconColor,
-    },
-  },
-})
-
 const StatusBar: FC<StatusBarProps> = (props: StatusBarProps) => {
   return (
     <div>
-      <ThemeProvider theme={theme}>
         <AppBar position="relative">
           <Toolbar>
             <Container sx={{ flex: 1 }}>
@@ -74,7 +43,7 @@ const StatusBar: FC<StatusBarProps> = (props: StatusBarProps) => {
                 sx={{
                   marginRight: '0.5rem',
                   '& .MuiLoadingButton-loadingIndicator': {
-                    color: "#4d4d4e",
+                    color: "#f7931a",
                   },
                 }}
                 size="small"
@@ -90,7 +59,6 @@ const StatusBar: FC<StatusBarProps> = (props: StatusBarProps) => {
             <NewAddressDialog />
           </Toolbar>
         </AppBar>
-      </ThemeProvider>
     </div>
   )
 }
