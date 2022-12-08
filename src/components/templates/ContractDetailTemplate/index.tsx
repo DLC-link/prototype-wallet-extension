@@ -43,7 +43,7 @@ const ContractDetailTemplate: FC<ContractDetailTemplateProps> = (
   return (
       <MainLayout>
           <Box sx={{ backgroundColor: '#f7931a', height: "50px" }}>
-            <Typography fontSize={24} fontWeight="extrabold" color="#ffffff" align='center' padding={1}>Contract Details</Typography>
+            <Typography fontSize={24} fontWeight='light' color="#ffffff" align='center' padding={1}>CONTRACT DETAILS</Typography>
           </Box>
           {/* <Tabs
             items={tabItems}

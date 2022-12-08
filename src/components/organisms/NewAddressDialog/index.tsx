@@ -1,36 +1,18 @@
 import * as React from 'react'
 import Button from '@mui/material/Button'
-import DialogContent from '@mui/material/DialogContent'
-import DialogTitle from '@mui/material/DialogTitle'
-import Dialog from '@mui/material/Dialog'
-import Typography from '@mui/material/Typography'
-import { FC, useState } from 'react'
+import { FC } from 'react'
 import { useAddressContext } from '../../../providers/AddressProvider'
-import ContactEmergencyIcon from '@mui/icons-material/ContactEmergency'
-import { IconButton } from '@mui/material'
 import { useSnackbar } from '../../../providers/Snackbar'
-import ContentCopyIcon from '@mui/icons-material/ContentCopy'
-import { Stack } from '@mui/system'
+import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 
 export const NewAddressDialog: FC = () => {
   const addressContext = useAddressContext()
-  const [open, setOpen] = React.useState(false)
-  const [balance, setBalance] = useState('')
 
   const snackbar = useSnackbar()
 
-  const handleClickOpen = async (): Promise<void> => {
-    setBalance(await addressContext.getNewAddress())
-    setOpen(true)
-  }
-
-  const handleClose = () => {
-    setOpen(false)
-  }
-
-  const copyToClickBoard = (address: string) => {
-    navigator.clipboard.writeText(address)
-    snackbar.createSnack('Address copied to clipboard!', 'success')
+  const copyToClickBoard = async () => {
+    navigator.clipboard.writeText(await addressContext.getNewAddress())
+    snackbar.createSnack('Wallet Address copied to clipboard!', 'success')
   }
 
   return (
@@ -39,30 +21,10 @@ export const NewAddressDialog: FC = () => {
         size="small"
         color="secondary"
         variant="text"
-        onClick={handleClickOpen}
+        onClick={() => copyToClickBoard()}
       >
-        <ContactEmergencyIcon color="secondary"></ContactEmergencyIcon>
+        <AccountBalanceWalletIcon color="secondary"></AccountBalanceWalletIcon>
       </Button>
-      <Dialog open={open} onClose={handleClose} sx={{ backgroundColor: "#4d4d4e" }}>
-        <DialogTitle textAlign="center" color="secondary">
-          Address to fund the wallet
-        </DialogTitle>
-        <DialogContent dividers>
-          <Stack
-            direction="row"
-            alignItems="center"
-            justifyContent="center"
-            spacing="15px"
-          >
-            <Typography fontSize="10px" gutterBottom>
-              {balance}
-            </Typography>
-            <IconButton size="small" onClick={() => copyToClickBoard(balance)}>
-              <ContentCopyIcon color="secondary"></ContentCopyIcon>
-            </IconButton>
-          </Stack>
-        </DialogContent>
-      </Dialog>
-      </>
+    </>
   )
 }

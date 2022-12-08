@@ -9,6 +9,7 @@ import { AnyContract } from 'dlc-lib'
 import { Transaction } from 'bitcoinjs-lib'
 import Config from '../../../config'
 import OpenInNewIcon from '@mui/icons-material/OpenInNew'
+import { BtcDisplay } from '../../atoms/BtcDisplay'
 
 export type ContractViewProps = {
   data: AnyContract
@@ -125,7 +126,12 @@ export const ContractView: FC<ContractViewProps> = (
           </TableRow>
           <TableRow>
             <TableCell>COLLATERAL:</TableCell>
-            <TableCell>{formattedContract.collateral}</TableCell>
+            <TableCell>
+              <BtcDisplay
+                satvalue={formattedContract.collateral}
+                currency="sats"
+              ></BtcDisplay>
+            </TableCell>
           </TableRow>
           {blockChainLink !== null && (
             <TableRow>
@@ -137,7 +143,7 @@ export const ContractView: FC<ContractViewProps> = (
                   sx={[
                     {
                       '&:hover': {
-                        cursor: "pointer"
+                        cursor: 'pointer',
                       },
                     },
                   ]}

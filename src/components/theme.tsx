@@ -3,7 +3,12 @@ import { createTheme } from '@mui/material/styles'
 const theme = createTheme({
   typography: {
     fontFamily: [
-      'Poppins', 'sans-serif',
+      'TT Hoves Pro Trial',
+      'sans-serif',
+      'TT Hoves Pro Trial Variable',
+      'sans-serif',
+      'TT Hoves Pro',
+      'sans-serif',
     ].join(','),
   },
   components: {

@@ -67,6 +67,7 @@ export const SnackbarProvider: FC<LayoutProps> = (props: LayoutProps) => {
     <SnackbarContext.Provider value={{ createSnack: createSnack }}>
       {current && (
         <Snackbar
+          anchorOrigin={{vertical: 'bottom', horizontal: 'center'}}
           key={current.id}
           open={current.open}
           autoHideDuration={3000}
