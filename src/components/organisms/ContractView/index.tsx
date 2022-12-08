@@ -1,5 +1,5 @@
 import React from 'react'
-import { Table, TableRow, TableCell, Typography } from '@mui/material'
+import { Table, TableRow, TableCell } from '@mui/material'
 import { DateTime } from 'luxon'
 import { FC, useEffect, useState } from 'react'
 import { ContractState } from 'dlc-lib'

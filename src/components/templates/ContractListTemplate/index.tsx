@@ -43,9 +43,7 @@ const ContractListTemplate: FC<ContractListTemplateProps> = (
           }}
         >
           <DataGrid
-            title={"Discreet Log Contracts"}
             data={contractData}
-            onRowClick={handleRowClicked}
           />
         </Box>
       </MainLayout>
