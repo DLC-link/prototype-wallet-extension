@@ -20,7 +20,7 @@ type ContractQuickViewProps = {
 
 const viewTableContentCellSX = {
   width: '50%',
-  fontSize: '12px',
+  fontSize: '14px',
   fontWeight: 'light',
   color: '#ffffff',
   borderBottom: '5px',

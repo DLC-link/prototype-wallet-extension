@@ -62,7 +62,7 @@ const createFormattedContract = (contract: AnyContract) => {
 }
 
 const tableHeadCellSX = {
-  fontSize: '8px',
+  fontSize: '12px',
   fontWeight: 'light',
   color: '#ffffff',
   textAlign: 'center',
@@ -71,8 +71,10 @@ const tableHeadCellSX = {
 }
 
 const tableContentCellSX = {
+  fontSize: '14px',
   color: '#ffffff',
-  borderBottom: '5px',
+  borderBottom: '15px',
+  borderColor: '#ffffff',
   paddingTop: '0px',
   textAlign: 'center',
 }
@@ -121,7 +123,7 @@ const ContractsTableRow: FC<ContractsTableRowProps> = (
   return (
     !isLoading && (
       <>
-        <Box sx={{ backgroundColor: '#4d4d4e' }}>
+        <Box sx={{ backgroundColor: '#4d4d4e', marginTop: '2px' }}>
           <Fade in={isExpanded}>
             <Table>
               <TableRow>
@@ -135,12 +137,11 @@ const ContractsTableRow: FC<ContractsTableRowProps> = (
                   FUNDING TX
                 </TableCell>
                 <TableCell style={{ width: '20%' }} sx={tableHeadCellSX}>
-                  OPEN DETAILS
+                  DETAILS
                 </TableCell>
               </TableRow>
             </Table>
           </Fade>
-        </Box>
         <Table>
           <TableRow
             onMouseEnter={() => handleMouseEvent(true)}
@@ -179,6 +180,7 @@ const ContractsTableRow: FC<ContractsTableRowProps> = (
           isDialogOpen={isDialogOpen}
           onOpenDialog={handleOpenDialog}
         ></ContractQuickView>
+        </Box>
       </>
     )
   )

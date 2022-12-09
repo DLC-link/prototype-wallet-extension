@@ -19,13 +19,21 @@ export const NewAddressDialog: FC = () => {
   return (
     <>
       <Button
-      sx={{ height: '40px', width: '120px'}}
+        sx={{ height: '40px', width: '120px' }}
         color="secondary"
-        variant='contained'
+        variant="contained"
         onClick={() => copyToClickBoard()}
       >
-        <Typography sx={{ fontSize: '8px', color: '#ffffff', fontWeight: 'normal' }}>
-          GET WALLET ADDRESS
+        <Typography
+          sx={{
+            fontSize: '12px',
+            color: '#ffffff',
+            fontWeight: 'normal',
+            lineHeight: '10px',
+            padding: '1px',
+          }}
+        >
+          WALLET ADDRESS
         </Typography>
       </Button>
     </>

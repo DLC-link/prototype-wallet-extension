@@ -1,10 +1,11 @@
 import React from 'react'
-import { Box, Button } from '@mui/material'
+import { Box, Button, Typography } from '@mui/material'
 import { FC, useEffect, useState } from 'react'
 import { AnyContract } from 'dlc-lib'
 import DataGrid from '../../organisms/DataGrid'
 import MainLayout from '../../organisms/MainLayout'
 import { NewAddressDialog } from '../../organisms/NewAddressDialog'
+import { fontStyle } from '@mui/system'
 
 type ContractListTemplateProps = {
   data: AnyContract[]
@@ -28,23 +29,32 @@ const ContractListTemplate: FC<ContractListTemplateProps> = (
   return (
     <Box
       sx={{
-        width: "357px", 
-        height: "100%",
+        width: '357px',
+        height: '100%',
       }}
     >
       <MainLayout>
+        <Box sx={{ backgroundColor: '#f7931a' }}>
+          <Typography
+          textAlign='center'
+            sx={{
+              fontSize: '24px',
+              padding: '5px',
+              color: '#ffffff',
+              fontWeight: 'bold',
+              fontStyle: 'normal'
+            }}
+          >
+            MY LOANS
+          </Typography>
+        </Box>
         <Box
           sx={{
             height: '100%',
-            width: "100%",
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
+            width: '100%',
           }}
         >
-          <DataGrid
-            data={contractData}
-          />
+          <DataGrid data={contractData} />
         </Box>
       </MainLayout>
     </Box>
