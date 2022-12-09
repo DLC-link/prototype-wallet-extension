@@ -6,7 +6,8 @@ import { regtest } from 'bitcoinjs-lib/src/networks'
 const Config = {
   network: regtest,
   // blockchainExplorerBaseUrl: 'http://localhost:9090/electrs/',
-  blockchainExplorerBaseUrl: 'http://stx-btc1.dlc.link:8001/'
+  bitcoinWalletApi: 'http://localhost:3004/',
+  blockChainExplorerBaseUrl: 'http://stx-btc1.dlc.link:8001/'
 }
 
 export default Config

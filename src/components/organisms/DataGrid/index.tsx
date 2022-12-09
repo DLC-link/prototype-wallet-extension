@@ -1,12 +1,9 @@
 import React from 'react'
-import {
-  Table,
-  TableCell,
-  TableHead,
-} from '@mui/material'
+import { Table, TableCell, TableHead, Collapse } from '@mui/material'
 import { FC, useEffect, useState } from 'react'
 import { AnyContract } from 'dlc-lib'
-import ContractsTableRow from "../../molecules/ContractsTableRow"
+import ContractsTableRow from '../../molecules/ContractsTableRow'
+import { width } from '@mui/system'
 
 type DataGridProps = {
   data: AnyContract[]
@@ -14,29 +11,25 @@ type DataGridProps = {
 
 const DataGrid: FC<DataGridProps> = (props: DataGridProps) => {
   const [localData, setLocalData] = useState<AnyContract[]>(props.data)
+  const [isExpanded, setExpanded] = useState(false)
 
   useEffect(() => {
     setLocalData(props.data)
   }, [props.data])
 
-  
+  const handleExpanded = (): void => {
+    setExpanded(!isExpanded)
+  }
+
   return (
-    <Table sx={{ color: '#ffffff'}}>
-      <TableHead sx={{ backgroundColor: '#f7931a'}}>
-        <TableCell sx={{fontSize: '12px', fontWeight: 'light'}}>
-          CONTRACT ID
-        </TableCell>
-        <TableCell sx={{fontSize: '12px', fontWeight: 'light'}}>
-          COLLATERAL
-        </TableCell>
-        <TableCell sx={{fontSize: '12px', fontWeight: 'light'}}>
-          FUNDING TX
-        </TableCell>
-      </TableHead>
+    <>
       {localData?.map((contract) => (
-        <ContractsTableRow contract={contract}></ContractsTableRow>
+        <ContractsTableRow
+          contract={contract}
+          onExpanded={handleExpanded}
+        ></ContractsTableRow>
       ))}
-    </Table>
+    </>
   )
 }
 

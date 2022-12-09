@@ -70,7 +70,7 @@ export const ContractView: FC<ContractViewProps> = (
       const fundTxId = Transaction.fromHex(
         contract.dlcTransactions.fund
       ).getId()
-      const blockChainLink = Config.blockchainExplorerBaseUrl + `tx/${fundTxId}`
+      const blockChainLink = Config.blockChainExplorerBaseUrl + `tx/${fundTxId}`
       setBlockChainLink(blockChainLink)
     } else {
       setBlockChainLink(null)

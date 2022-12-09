@@ -17,8 +17,20 @@ const theme = createTheme({
         root: {
           '&': {
             backgroundColor: '#4d4d4e',
-            borderTop: '2px solid rgba(255, 255, 255, 1) !important',
-            borderBottom: '2px solid rgba(255, 255, 255, 1) !important',
+            // borderTop: '4px solid rgba(255, 255, 255, 1) !important',
+            // borderBottom: '4px solid rgba(255, 255, 255, 1) !important',
+            fontSize: '10px'
+          },
+        },
+      },
+    },
+    MuiTableHead: {
+      styleOverrides: {
+        root: {
+          '&': {
+            backgroundColor: '#f7931a',
+            fontSize: '12px',
+            fontWeight: 'light',
           },
         },
       },

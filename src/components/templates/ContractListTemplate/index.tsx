@@ -29,7 +29,7 @@ const ContractListTemplate: FC<ContractListTemplateProps> = (
     <Box
       sx={{
         width: "357px", 
-        height: "600px",
+        height: "100%",
       }}
     >
       <MainLayout>
