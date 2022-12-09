@@ -39,6 +39,11 @@ const createFormattedContract = (contract: AnyContract) => {
   const contractMaturityBound = contract.contractMaturityBound
   const zone = { zone: 'utc' }
   const dateTimeFormat = 'yyyy-LL-dd HH:mm:ss'
+  let blockChainLink = ''
+  if (contract.state == ContractState.Broadcast) {
+    const txID = Transaction.fromHex(contract.dlcTransactions.fund).getId()
+    blockChainLink = Config.blockChainExplorerBaseUrl + `tx/${txID}`
+  }
   const formattedContract = {
     ID:
       'id' in contract
@@ -47,11 +52,7 @@ const createFormattedContract = (contract: AnyContract) => {
     collateral:
       'acceptParams' in contract ? contract.acceptParams.collateral : NaN,
     state: contract.state,
-    fundingTX:
-      contract.state == ContractState.Broadcast
-        ? Config.blockChainExplorerBaseUrl +
-          `tx/${contract.dlcTransactions.fund}`
-        : undefined,
+    fundingTX: blockChainLink,
     maturityDate: DateTime.fromSeconds(contractMaturityBound, zone).toFormat(
       dateTimeFormat
     ),

@@ -3,12 +3,8 @@ import { createTheme } from '@mui/material/styles'
 const theme = createTheme({
   typography: {
     fontFamily: [
-      'TT Hoves Pro Trial',
-      'sans-serif',
-      'TT Hoves Pro Trial Variable',
-      'sans-serif',
-      'TT Hoves Pro',
-      'sans-serif',
+      'Noyh Geometric Slim', 'sans-serif', 
+      'Noyh Geometric', 'sans-serif'
     ].join(','),
   },
   components: {

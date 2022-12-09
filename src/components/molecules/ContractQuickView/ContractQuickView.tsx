@@ -19,6 +19,9 @@ type ContractQuickViewProps = {
 }
 
 const viewTableContentCellSX = {
+  width: '50%',
+  fontSize: '12px',
+  fontWeight: 'light',
   color: '#ffffff',
   borderBottom: '5px',
 }
@@ -30,8 +33,8 @@ const iconSX = {
 }
 
 const openNewTab = (blockChainLink: string) => {
-    window.open(blockChainLink, '_blank')
-  }
+  window.open(blockChainLink, '_blank')
+}
 
 const ContractQuickView: FC<ContractQuickViewProps> = (
   props: ContractQuickViewProps

@@ -3,7 +3,8 @@ import Button from '@mui/material/Button'
 import { FC } from 'react'
 import { useAddressContext } from '../../../providers/AddressProvider'
 import { useSnackbar } from '../../../providers/Snackbar'
-import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
+import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet'
+import { Typography } from '@mui/material'
 
 export const NewAddressDialog: FC = () => {
   const addressContext = useAddressContext()
@@ -18,12 +19,14 @@ export const NewAddressDialog: FC = () => {
   return (
     <>
       <Button
-        size="small"
+      sx={{ height: '40px', width: '120px'}}
         color="secondary"
-        variant="text"
+        variant='contained'
         onClick={() => copyToClickBoard()}
       >
-        <AccountBalanceWalletIcon color="secondary"></AccountBalanceWalletIcon>
+        <Typography sx={{ fontSize: '8px', color: '#ffffff', fontWeight: 'normal' }}>
+          GET WALLET ADDRESS
+        </Typography>
       </Button>
     </>
   )
