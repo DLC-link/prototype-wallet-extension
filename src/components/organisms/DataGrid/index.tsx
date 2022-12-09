@@ -11,22 +11,17 @@ type DataGridProps = {
 
 const DataGrid: FC<DataGridProps> = (props: DataGridProps) => {
   const [localData, setLocalData] = useState<AnyContract[]>(props.data)
-  const [isExpanded, setExpanded] = useState(false)
 
   useEffect(() => {
     setLocalData(props.data)
   }, [props.data])
 
-  const handleExpanded = (): void => {
-    setExpanded(!isExpanded)
-  }
 
   return (
     <>
       {localData?.map((contract) => (
         <ContractsTableRow
           contract={contract}
-          onExpanded={handleExpanded}
         ></ContractsTableRow>
       ))}
     </>

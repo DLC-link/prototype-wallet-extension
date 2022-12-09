@@ -54,7 +54,7 @@ export const BtcDisplay: FC<BtcDisplayProps> = (props: BtcDisplayProps) => {
   return (
     <>
       <BtcTypography
-        fontSize={12}
+        fontSize={currencyState === 'sats' ? '10px' : '12px' }
         pnlcolors={pnlcolors}
         satvalue={satvalue}
         currency={currency}

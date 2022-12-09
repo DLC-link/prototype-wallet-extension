@@ -9,6 +9,8 @@ import {
   TableBody,
   Tooltip,
   Fade,
+  Dialog,
+  DialogContent,
 } from '@mui/material'
 import OpenInNewIcon from '@mui/icons-material/OpenInNew'
 import { FC, useEffect, useState } from 'react'
@@ -18,7 +20,8 @@ import { Transaction } from 'bitcoinjs-lib'
 import { BtcDisplay } from '../../atoms/BtcDisplay'
 import Config from '../../../config'
 import { DateTime } from 'luxon'
-import PageviewIcon from '@mui/icons-material/Pageview';
+import PageviewIcon from '@mui/icons-material/Pageview'
+import ContractQuickView from '../ContractQuickView/ContractQuickView'
 
 const truncateContractID = (contractID: string) => {
   return (
@@ -57,9 +60,30 @@ const createFormattedContract = (contract: AnyContract) => {
   return formattedContract
 }
 
+const tableHeadCellSX = {
+  fontSize: '8px',
+  fontWeight: 'light',
+  color: '#ffffff',
+  textAlign: 'center',
+  padding: '2px',
+  border: '0px',
+}
+
+const tableContentCellSX = {
+  color: '#ffffff',
+  borderBottom: '5px',
+  paddingTop: '0px',
+  textAlign: 'center',
+}
+
+const iconSX = {
+  '&:hover': {
+    cursor: 'pointer',
+  },
+}
+
 type ContractsTableRowProps = {
   contract: AnyContract
-  onExpanded: () => void
 }
 
 const ContractsTableRow: FC<ContractsTableRowProps> = (
@@ -69,6 +93,7 @@ const ContractsTableRow: FC<ContractsTableRowProps> = (
   const [formattedContract, setFormattedContract] = useState(null)
   const [isLoading, setLoading] = useState(true)
   const [isExpanded, setExpanded] = useState(false)
+  const [isDialogOpen, setDialogOpen] = useState(false)
 
   useEffect(() => {
     setContract(props.contract)
@@ -76,9 +101,20 @@ const ContractsTableRow: FC<ContractsTableRowProps> = (
     setLoading(false)
   }, [props.contract])
 
-  const handleClick = (): void => {
-    setExpanded(!isExpanded)
-    props.onExpanded()
+  const handleMouseEvent = (enter: boolean): void => {
+    switch (enter) {
+      case true:
+        setExpanded(true)
+        break
+      case false:
+        setExpanded(false)
+        break
+    }
+  }
+
+  const handleOpenDialog = (): void => {
+    setDialogOpen(!isDialogOpen)
+    setExpanded(false)
   }
 
   return (
@@ -86,54 +122,18 @@ const ContractsTableRow: FC<ContractsTableRowProps> = (
       <>
         <Box sx={{ backgroundColor: '#4d4d4e' }}>
           <Fade in={isExpanded}>
-            <Table sx={{ color: '#ffffff' }}>
-              <TableRow sx={{ borderBottom: '0px', height: '8px' }}>
-                <TableCell
-                style={{ width: '30%' }}
-                  sx={{
-                    fontSize: '8px',
-                    fontWeight: 'light',
-                    textAlign: 'center',
-                    padding: '2px',
-                    border: '0px',
-                  }}
-                >
+            <Table>
+              <TableRow>
+                <TableCell style={{ width: '30%' }} sx={tableHeadCellSX}>
                   CONTRACT ID
                 </TableCell>
-                <TableCell
-                style={{ width: '30%' }}
-                  sx={{
-                    fontSize: '8px',
-                    fontWeight: 'light',
-                    textAlign: 'center',
-                    padding: '2px',
-                    border: '0px',
-                  }}
-                >
+                <TableCell style={{ width: '30%' }} sx={tableHeadCellSX}>
                   COLLATERAL
                 </TableCell>
-                <TableCell
-                style={{ width: '20%' }}
-                  sx={{
-                    fontSize: '8px',
-                    fontWeight: 'light',
-                    textAlign: 'center',
-                    padding: '2px',
-                    border: '0px',
-                  }}
-                >
+                <TableCell style={{ width: '20%' }} sx={tableHeadCellSX}>
                   FUNDING TX
                 </TableCell>
-                <TableCell
-                style={{ width: '20%' }}
-                  sx={{
-                    fontSize: '8px',
-                    fontWeight: 'light',
-                    textAlign: 'center',
-                    padding: '2px',
-                    border: '0px',
-                  }}
-                >
+                <TableCell style={{ width: '20%' }} sx={tableHeadCellSX}>
                   OPEN DETAILS
                 </TableCell>
               </TableRow>
@@ -141,82 +141,43 @@ const ContractsTableRow: FC<ContractsTableRowProps> = (
           </Fade>
         </Box>
         <Table>
-          <TableBody>
-            <TableRow
-              onMouseEnter={() => handleClick()}
-              onMouseLeave={() => handleClick()}
-              sx={{ width: '50px' }}
-            >
-              <TableCell
-                style={{ width: '30%' }}
-                sx={{
-                  borderBottom: '5px',
-                  paddingTop: '0px',
-                  textAlign: 'center',
-                }}
-              >
-                {formattedContract.ID}
-              </TableCell>
-              <TableCell
-                style={{ width: '30%' }}
-                sx={{
-                  borderBottom: '5px',
-                  paddingTop: '0px',
-                  textAlign: 'center',
-                  paddingLeft: '0px',
-                  paddingRight: '0px',
-                }}
-              >
-                <BtcDisplay
-                  satvalue={formattedContract.collateral}
-                  currency="sats"
-                ></BtcDisplay>
-              </TableCell>
-              <TableCell
-                style={{ width: '20%' }}
-                sx={{
-                  borderBottom: '5px',
-                  paddingTop: '0px',
-                  textAlign: 'center',
-                }}
-              >
-                {formattedContract.fundingTX !== undefined && (
-                  <OpenInNewIcon
-                    color="secondary"
-                    onClick={() => openNewTab(formattedContract.fundingTX)}
-                    sx={[
-                      {
-                        '&:hover': {
-                          cursor: 'pointer'
-                        },
-                      },
-                    ]}
-                  ></OpenInNewIcon>
-                )}
-              </TableCell>
-              <TableCell
-                style={{ width: '20%' }}
-                sx={{
-                  borderBottom: '5px',
-                  paddingTop: '0px',
-                  textAlign: 'center',
-                }}
-              >
-                  <PageviewIcon
-                    color="secondary"
-                    onClick={() => openNewTab(formattedContract.fundingTX)}
-                    sx={[
-                      {
-                        '&:hover': {
-                          cursor: 'pointer'
-                        },
-                      },
-                    ]}
-                  ></PageviewIcon>
-              </TableCell>
-            </TableRow>
-          </TableBody>
+          <TableRow
+            onMouseEnter={() => handleMouseEvent(true)}
+            onMouseLeave={() => handleMouseEvent(false)}
+            sx={{ width: '50px' }}
+          >
+            <TableCell style={{ width: '30%' }} sx={tableContentCellSX}>
+              {formattedContract.ID}
+            </TableCell>
+            <TableCell style={{ width: '30%' }} sx={tableContentCellSX}>
+              <BtcDisplay
+                satvalue={formattedContract.collateral}
+                currency="sats"
+              ></BtcDisplay>
+            </TableCell>
+            <TableCell style={{ width: '20%' }} sx={tableContentCellSX}>
+              {formattedContract.fundingTX !== undefined && (
+                <OpenInNewIcon
+                  color="secondary"
+                  onClick={() => openNewTab(formattedContract.fundingTX)}
+                  sx={[iconSX]}
+                ></OpenInNewIcon>
+              )}
+            </TableCell>
+            <TableCell style={{ width: '20%' }} sx={tableContentCellSX}>
+              <PageviewIcon
+                color="secondary"
+                onClick={() => handleOpenDialog()}
+                sx={[iconSX]}
+              ></PageviewIcon>
+            </TableCell>
+          </TableRow>
         </Table>
+        <ContractQuickView
+          formattedContract={formattedContract}
+          isDialogOpen={isDialogOpen}
+          onOpenDialog={handleOpenDialog}
+        ></ContractQuickView>
       </>
     )
   )
