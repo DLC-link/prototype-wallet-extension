@@ -2,25 +2,15 @@ import React from 'react'
 import {
   TableRow,
   TableCell,
-  TableHead,
-  Collapse,
   Table,
   Box,
-  TableBody,
-  Tooltip,
-  Fade,
   Dialog,
   DialogContent,
 } from '@mui/material'
 import OpenInNewIcon from '@mui/icons-material/OpenInNew'
-import { FC, useEffect, useState } from 'react'
+import { FC } from 'react'
 import { ContractState } from 'dlc-lib'
-import { AnyContract } from 'dlc-lib'
-import { Transaction } from 'bitcoinjs-lib'
 import { BtcDisplay } from '../../atoms/BtcDisplay'
-import Config from '../../../config'
-import { DateTime } from 'luxon'
-import PageviewIcon from '@mui/icons-material/Pageview'
 
 type ContractQuickViewProps = {
   formattedContract: any

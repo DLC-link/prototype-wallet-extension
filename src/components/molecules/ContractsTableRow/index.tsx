@@ -50,7 +50,7 @@ const createFormattedContract = (contract: AnyContract) => {
     fundingTX:
       contract.state == ContractState.Broadcast
         ? Config.blockChainExplorerBaseUrl +
-          `tx/${Transaction.fromHex(contract.dlcTransactions.fund)}`
+          `tx/${contract.dlcTransactions.fund}`
         : undefined,
     maturityDate: DateTime.fromSeconds(contractMaturityBound, zone).toFormat(
       dateTimeFormat
