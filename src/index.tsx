@@ -22,7 +22,7 @@ ReactDOM.render(
   <ProviderWrapper store={store}>
     <ThemeProvider theme={theme}>
       <SnackbarProvider>
-        <AddressProvider addressFn={() => wallet.getNewAddress()}>
+        <AddressProvider addressFn={() => storage.getAddresses()}>
           <StatusBarProvider balanceFn={() => wallet.getBalance()}>
             {routes}
           </StatusBarProvider>

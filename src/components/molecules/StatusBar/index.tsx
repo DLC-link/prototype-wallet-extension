@@ -79,7 +79,7 @@ const StatusBar: FC<StatusBarProps> = (props: StatusBarProps) => {
               </LoadingButton>
               <BtcDisplay satvalue={balance} currency="BTC" />
             </Container>
-            <NewAddressDialog />
+            <NewAddressDialog/>
           </Toolbar>
         </AppBar>
     </>

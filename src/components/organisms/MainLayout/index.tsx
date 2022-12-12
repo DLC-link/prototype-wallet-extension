@@ -37,7 +37,6 @@ const MainLayout: FC<LayoutProps> = (props: LayoutProps) => {
   return (
     <Box>
       <StatusBar
-      
       />
     </Box>
   )

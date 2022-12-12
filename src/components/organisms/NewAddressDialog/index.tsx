@@ -5,14 +5,21 @@ import { useAddressContext } from '../../../providers/AddressProvider'
 import { useSnackbar } from '../../../providers/Snackbar'
 import { Typography } from '@mui/material'
 import ContentCopyIcon from '@mui/icons-material/ContentCopy'
+import { BitcoinJSWallet } from 'dlc-lib'
+import { ElectrsBlockchain } from 'dlc-lib'
+import Config from '../../../config'
+import { LocalRepository } from '../../../persistence/localRepository'
+
+const storage = new LocalRepository()
+const blockchain = new ElectrsBlockchain(Config.bitcoinWalletApi)
+const wallet = new BitcoinJSWallet(storage, Config.network, blockchain)
 
 export const NewAddressDialog: FC = () => {
-  const addressContext = useAddressContext()
-
   const snackbar = useSnackbar()
 
   const copyToClickBoard = async () => {
-    navigator.clipboard.writeText(await addressContext.getNewAddress())
+    const newAddress = await wallet.getNewAddress();
+    navigator.clipboard.writeText(newAddress)
     snackbar.createSnack('Wallet Address copied to clipboard!', 'success')
   }
 
