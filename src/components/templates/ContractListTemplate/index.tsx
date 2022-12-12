@@ -38,14 +38,14 @@ const ContractListTemplate: FC<ContractListTemplateProps> = (
           <Typography
           textAlign='center'
             sx={{
-              fontSize: '24px',
               padding: '5px',
+              fontSize: '24px',
               color: '#ffffff',
               fontWeight: 'bold',
               fontStyle: 'normal'
             }}
           >
-            MY LOANS
+            MY DLC's
           </Typography>
         </Box>
         <Box
