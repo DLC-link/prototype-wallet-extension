@@ -2,7 +2,8 @@ import React, { FC, useEffect, useState } from 'react'
 import StatusBar from '../../molecules/StatusBar'
 
 import { useStatusBarContext } from '../../../providers/StatusBar'
-import { Box } from '@mui/material'
+import { Box, Typography, Table, TableHead, TableCell } from '@mui/material'
+import ContractsTableHeader from '../../molecules/ContractsTableHeader'
 
 export type LayoutProps = {
   onBack?: () => void
@@ -40,11 +41,6 @@ const MainLayout: FC<LayoutProps> = (props: LayoutProps) => {
         refresh={handleRefresh}
         isLoading={isLoading}
       />
-      <Box>
-        <Box sx={{ flexGrow: 2, display: 'flex', flexDirection: 'column' }}>
-          {props.children}
-        </Box>
-      </Box>
     </Box>
   )
 }

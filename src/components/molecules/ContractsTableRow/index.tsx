@@ -11,6 +11,7 @@ import {
   Fade,
   Dialog,
   DialogContent,
+  Typography,
 } from '@mui/material'
 import OpenInNewIcon from '@mui/icons-material/OpenInNew'
 import { FC, useEffect, useState } from 'react'
@@ -61,21 +62,9 @@ const createFormattedContract = (contract: AnyContract) => {
   return formattedContract
 }
 
-const tableHeadCellSX = {
-  fontSize: '12px',
-  fontWeight: 'light',
-  color: '#ffffff',
-  textAlign: 'center',
-  padding: '2px',
-  border: '0px',
-}
-
 const tableContentCellSX = {
   fontSize: '14px',
   color: '#ffffff',
-  borderBottom: '15px',
-  borderColor: '#ffffff',
-  paddingTop: '0px',
   textAlign: 'center',
 }
 
@@ -95,7 +84,6 @@ const ContractsTableRow: FC<ContractsTableRowProps> = (
   const [contract, setContract] = useState<AnyContract>(props.contract)
   const [formattedContract, setFormattedContract] = useState(null)
   const [isLoading, setLoading] = useState(true)
-  const [isExpanded, setExpanded] = useState(false)
   const [isDialogOpen, setDialogOpen] = useState(false)
 
   useEffect(() => {
@@ -104,50 +92,15 @@ const ContractsTableRow: FC<ContractsTableRowProps> = (
     setLoading(false)
   }, [props.contract])
 
-  const handleMouseEvent = (enter: boolean): void => {
-    switch (enter) {
-      case true:
-        setExpanded(true)
-        break
-      case false:
-        setExpanded(false)
-        break
-    }
-  }
-
   const handleOpenDialog = (): void => {
     setDialogOpen(!isDialogOpen)
-    setExpanded(false)
   }
 
   return (
     !isLoading && (
       <>
-        <Box sx={{ backgroundColor: '#4d4d4e', marginTop: '2px' }}>
-          <Fade in={isExpanded}>
-            <Table>
-              <TableRow>
-                <TableCell style={{ width: '30%' }} sx={tableHeadCellSX}>
-                  CONTRACT ID
-                </TableCell>
-                <TableCell style={{ width: '30%' }} sx={tableHeadCellSX}>
-                  COLLATERAL
-                </TableCell>
-                <TableCell style={{ width: '20%' }} sx={tableHeadCellSX}>
-                  FUNDING TX
-                </TableCell>
-                <TableCell style={{ width: '20%' }} sx={tableHeadCellSX}>
-                  DETAILS
-                </TableCell>
-              </TableRow>
-            </Table>
-          </Fade>
-        <Table>
-          <TableRow
-            onMouseEnter={() => handleMouseEvent(true)}
-            onMouseLeave={() => handleMouseEvent(false)}
-            sx={{ width: '50px' }}
-          >
+        <Table sx={{ margin: '5px 0px' }}>
+          <TableRow>
             <TableCell style={{ width: '30%' }} sx={tableContentCellSX}>
               {formattedContract.ID}
             </TableCell>
@@ -180,7 +133,6 @@ const ContractsTableRow: FC<ContractsTableRowProps> = (
           isDialogOpen={isDialogOpen}
           onOpenDialog={handleOpenDialog}
         ></ContractQuickView>
-        </Box>
       </>
     )
   )

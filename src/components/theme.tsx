@@ -13,8 +13,6 @@ const theme = createTheme({
         root: {
           '&': {
             backgroundColor: '#4d4d4e',
-            // borderTop: '4px solid rgba(255, 255, 255, 1) !important',
-            // borderBottom: '4px solid rgba(255, 255, 255, 1) !important',
             fontSize: '10px'
           },
         },

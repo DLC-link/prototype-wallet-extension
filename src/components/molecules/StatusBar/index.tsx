@@ -5,6 +5,7 @@ import {
   Container,
   createTheme,
   Toolbar,
+  Typography,
 } from '@mui/material'
 import { Refresh } from '@mui/icons-material'
 import { LoadingButton } from '@mui/lab'
@@ -21,8 +22,8 @@ type StatusBarProps = {
 
 const StatusBar: FC<StatusBarProps> = (props: StatusBarProps) => {
   return (
-    <div>
-        <AppBar position="relative">
+    <>
+        <AppBar position="fixed">
           <Toolbar>
             <Container sx={{ flex: 1 }}>
               <Box
@@ -43,7 +44,7 @@ const StatusBar: FC<StatusBarProps> = (props: StatusBarProps) => {
                 sx={{
                   marginRight: '0.5rem',
                   '& .MuiLoadingButton-loadingIndicator': {
-                    color: "#f7931a",
+                    color: '#f7931a',
                   },
                 }}
                 size="small"
@@ -59,7 +60,7 @@ const StatusBar: FC<StatusBarProps> = (props: StatusBarProps) => {
             <NewAddressDialog />
           </Toolbar>
         </AppBar>
-    </div>
+    </>
   )
 }
 
