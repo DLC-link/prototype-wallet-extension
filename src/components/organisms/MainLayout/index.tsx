@@ -37,9 +37,7 @@ const MainLayout: FC<LayoutProps> = (props: LayoutProps) => {
   return (
     <Box>
       <StatusBar
-        balance={balance}
-        refresh={handleRefresh}
-        isLoading={isLoading}
+      
       />
     </Box>
   )

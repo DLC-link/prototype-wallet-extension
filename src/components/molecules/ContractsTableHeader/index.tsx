@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { Table, TableCell, TableHead, Typography, Box } from '@mui/material'
+import { Table, TableCell, TableHead, Typography, Stack } from '@mui/material'
 
 type ContractsTableHeaderProps = {}
 
@@ -15,15 +15,18 @@ const ContractsTableHeader: FC<ContractsTableHeaderProps> = (
   props: ContractsTableHeaderProps
 ) => {
   return (
-    <Box
+    <Stack
       sx={{
+        direction: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
         top: '66.5px',
         left: '0px',
         position: 'fixed',
         height: '75px',
         width: '405px',
         backgroundColor: '#f7931a',
-        zIndex: 1100,
+        zIndex: 1100
       }}
     >
       <Typography
@@ -54,7 +57,7 @@ const ContractsTableHeader: FC<ContractsTableHeaderProps> = (
           </TableCell>
         </TableHead>
       </Table>
-    </Box>
+    </Stack>
   )
 }
 

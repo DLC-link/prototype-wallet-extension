@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, useState, useEffect } from 'react'
 import {
   AppBar,
   Box,
@@ -10,17 +10,39 @@ import {
 import { Refresh } from '@mui/icons-material'
 import { LoadingButton } from '@mui/lab'
 import { NewAddressDialog } from '../../organisms/NewAddressDialog'
+import { useStatusBarContext } from '../../../providers/StatusBar'
 
 import p2plogo from '../../../assets/Bitcoin.svg'
 import { BtcDisplay } from '../../atoms/BtcDisplay'
 
 type StatusBarProps = {
-  balance: number
-  isLoading: boolean
-  refresh: () => void
+
 }
 
 const StatusBar: FC<StatusBarProps> = (props: StatusBarProps) => {
+  const statusBarContext = useStatusBarContext()
+
+  const [balance, setBalance] = useState(0)
+  const [isLoading, setLoading] = useState(true)
+
+  useEffect(() => {
+    getBalance()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const getBalance = async (): Promise<void> => {
+    setLoading(true)
+    await statusBarContext
+      .getBalance()
+      .then((balance) => setBalance(balance))
+      .then(() => setLoading(false))
+      .then(() => console.log(isLoading))
+  }
+
+  const handleRefresh = (): void => {
+    getBalance()
+  }
+
   return (
     <>
         <AppBar position="fixed">
@@ -48,14 +70,14 @@ const StatusBar: FC<StatusBarProps> = (props: StatusBarProps) => {
                   },
                 }}
                 size="small"
-                loading={props.isLoading}
+                loading={isLoading}
                 color="secondary"
                 variant="text"
-                onClick={props.refresh}
+                onClick={handleRefresh}
               >
                 <Refresh />
               </LoadingButton>
-              <BtcDisplay satvalue={props.balance} currency="BTC" />
+              <BtcDisplay satvalue={balance} currency="BTC" />
             </Container>
             <NewAddressDialog />
           </Toolbar>

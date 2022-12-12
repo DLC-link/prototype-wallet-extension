@@ -3,8 +3,8 @@ import Button from '@mui/material/Button'
 import { FC } from 'react'
 import { useAddressContext } from '../../../providers/AddressProvider'
 import { useSnackbar } from '../../../providers/Snackbar'
-import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet'
 import { Typography } from '@mui/material'
+import ContentCopyIcon from '@mui/icons-material/ContentCopy'
 
 export const NewAddressDialog: FC = () => {
   const addressContext = useAddressContext()
@@ -35,6 +35,9 @@ export const NewAddressDialog: FC = () => {
         >
           WALLET ADDRESS
         </Typography>
+        <ContentCopyIcon
+          sx={{ height: '16px', color: '#ffffff', padding: '1px' }}
+        ></ContentCopyIcon>
       </Button>
     </>
   )
