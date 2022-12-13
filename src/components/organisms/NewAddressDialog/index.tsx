@@ -1,7 +1,6 @@
 import * as React from 'react'
 import Button from '@mui/material/Button'
 import { FC } from 'react'
-import { useAddressContext } from '../../../providers/AddressProvider'
 import { useSnackbar } from '../../../providers/Snackbar'
 import { Typography } from '@mui/material'
 import ContentCopyIcon from '@mui/icons-material/ContentCopy'
