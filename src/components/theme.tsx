@@ -1,19 +1,26 @@
 import { createTheme } from '@mui/material/styles'
 
 const theme = createTheme({
-  typography: {
-    fontFamily: [
-      'Noyh Geometric Slim', 'sans-serif', 
-      'Noyh Geometric', 'sans-serif'
-    ].join(','),
-  },
+  // typography: {
+  //   fontFamily: [
+  //     'Noyh Geometric Slim', 'sans-serif',
+  //     'Noyh Geometric', 'sans-serif'
+  //   ].join(','),
+  // },
   components: {
+    MuiTypography: {
+      styleOverrides: {
+        root: {
+          color: '#ffffff'
+        }
+      }
+    },
     MuiTableRow: {
       styleOverrides: {
         root: {
           '&': {
             backgroundColor: '#4d4d4e',
-            fontSize: '10px'
+            fontSize: '10px',
           },
         },
       },
@@ -21,13 +28,34 @@ const theme = createTheme({
     MuiTableHead: {
       styleOverrides: {
         root: {
-          '&': {
-            backgroundColor: '#f7931a',
-            fontSize: '12px',
-            fontWeight: 'light',
-          },
+          backgroundColor: '#4d4d4e',
         },
       },
+    },
+    MuiTableCell: {
+      styleOverrides: {
+        root: {
+          fontSize: '15px',
+          fontWeight: 'light',
+          color: '#ffffff',
+          textAlign: 'center',
+          padding: '15px',
+        },
+        head: {
+          fontSize: '10px',
+          padding: '5px',
+        },
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          backgroundColor: '#f7931a'
+        },
+        text: {
+          backgroundColor: '#4d4d4e'
+        }
+      }
     },
     MuiIcon: {
       styleOverrides: {

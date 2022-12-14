@@ -17,7 +17,7 @@ export const NewAddressDialog: FC = () => {
   const snackbar = useSnackbar()
 
   const copyToClickBoard = async () => {
-    const newAddress = await wallet.getNewAddress();
+    const newAddress = await wallet.getNewAddress()
     navigator.clipboard.writeText(newAddress)
     snackbar.createSnack('Wallet Address copied to clipboard!', 'success')
   }
@@ -25,24 +25,22 @@ export const NewAddressDialog: FC = () => {
   return (
     <>
       <Button
-        sx={{ height: '40px', width: '120px' }}
-        color="secondary"
-        variant="contained"
+      variant='contained'
+        sx={{ height: '45px', width: '200px' }}
         onClick={() => copyToClickBoard()}
       >
         <Typography
           sx={{
             fontSize: '12px',
-            color: '#ffffff',
             fontWeight: 'normal',
-            lineHeight: '10px',
-            padding: '1px',
+            lineHeight: '15px',
+            padding: '5px',
           }}
         >
           WALLET ADDRESS
         </Typography>
         <ContentCopyIcon
-          sx={{ height: '16px', color: '#ffffff', padding: '1px' }}
+          sx={{ height: '15px', color: '#ffffff', padding: '2.5px' }}
         ></ContentCopyIcon>
       </Button>
     </>

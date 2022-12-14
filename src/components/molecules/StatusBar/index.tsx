@@ -3,15 +3,12 @@ import {
   AppBar,
   Box,
   Container,
-  createTheme,
-  Toolbar,
-  Typography,
+  Toolbar
 } from '@mui/material'
 import { Refresh } from '@mui/icons-material'
 import { LoadingButton } from '@mui/lab'
 import { NewAddressDialog } from '../../organisms/NewAddressDialog'
 import { useStatusBarContext } from '../../../providers/StatusBar'
-
 import p2plogo from '../../../assets/Bitcoin.svg'
 import { BtcDisplay } from '../../atoms/BtcDisplay'
 
@@ -50,7 +47,7 @@ const StatusBar: FC<StatusBarProps> = (props: StatusBarProps) => {
             <Container sx={{ flex: 1 }}>
               <Box
                 component="img"
-                sx={{ height: '40px', margin: '12px 0' }}
+                sx={{ height: '45px', padding: '10px' }}
                 src={p2plogo}
                 alt="P2P-Derivatives"
               />
@@ -59,25 +56,23 @@ const StatusBar: FC<StatusBarProps> = (props: StatusBarProps) => {
               sx={{
                 display: 'flex',
                 alignItems: 'center',
-                marginRight: '0.5rem',
+                padding: '5px'
               }}
             >
               <LoadingButton
                 sx={{
-                  marginRight: '0.5rem',
                   '& .MuiLoadingButton-loadingIndicator': {
                     color: '#f7931a',
+                    width: '15px'
                   },
                 }}
-                size="small"
                 loading={isLoading}
-                color="secondary"
-                variant="text"
                 onClick={handleRefresh}
+                loadingPosition='start'
+                startIcon={<Refresh sx={{color: '#f7931a' }} />}
               >
-                <Refresh />
               </LoadingButton>
-              <BtcDisplay satvalue={balance} currency="BTC" />
+              <BtcDisplay satValue={balance} currency="BTC" />
             </Container>
             <NewAddressDialog/>
           </Toolbar>

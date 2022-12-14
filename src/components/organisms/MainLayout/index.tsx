@@ -3,7 +3,7 @@ import StatusBar from '../../molecules/StatusBar'
 
 import { useStatusBarContext } from '../../../providers/StatusBar'
 import { Box, Typography, Table, TableHead, TableCell } from '@mui/material'
-import ContractsTableHeader from '../../molecules/ContractsTableHeader'
+import ContractsTableHeader from '../../molecules/Header'
 
 export type LayoutProps = {
   onBack?: () => void
@@ -27,7 +27,6 @@ const MainLayout: FC<LayoutProps> = (props: LayoutProps) => {
       .getBalance()
       .then((balance) => setBalance(balance))
       .then(() => setLoading(false))
-      .then(() => console.log(isLoading))
   }
 
   const handleRefresh = (): void => {

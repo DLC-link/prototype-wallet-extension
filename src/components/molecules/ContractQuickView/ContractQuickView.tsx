@@ -72,8 +72,8 @@ const ContractQuickView: FC<ContractQuickViewProps> = (
               <TableCell sx={viewTableContentCellSX}>COLLATERAL</TableCell>
               <TableCell sx={viewTableContentCellSX}>
                 <BtcDisplay
-                  satvalue={props.formattedContract.collateral}
-                  currency="sats"
+                  satValue={props.formattedContract.collateral}
+                  currency="SATS"
                 ></BtcDisplay>
               </TableCell>
             </TableRow>

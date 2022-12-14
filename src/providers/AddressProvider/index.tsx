@@ -16,8 +16,6 @@ export const AddressProvider: FC<ProviderProps> = (props: ProviderProps) => {
     try {
       let lastAddress = null
       await props.addressFn().then((addresses) => lastAddress = addresses[addresses.length]) 
-      console.log("last address:")
-      console.log(lastAddress)
       return lastAddress
     } catch {
       return [];

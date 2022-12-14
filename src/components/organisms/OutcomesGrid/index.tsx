@@ -81,8 +81,7 @@ const OutcomesGrid: FC<DataGridProps> = (props: DataGridProps) => {
         sort: true,
         customBodyRenderLite: (dataIndex: number): ReactElement => (
           <BtcDisplay
-            variant="inherit"
-            satvalue={data[dataIndex].offer}
+            satValue={data[dataIndex].offer}
             currency="BTC"
           />
         ),
@@ -96,8 +95,7 @@ const OutcomesGrid: FC<DataGridProps> = (props: DataGridProps) => {
         sort: true,
         customBodyRenderLite: (dataIndex: number): ReactElement => (
           <BtcDisplay
-            variant="inherit"
-            satvalue={data[dataIndex].accept}
+            satValue={data[dataIndex].accept}
             currency="BTC"
           />
         ),

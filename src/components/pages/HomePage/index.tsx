@@ -17,7 +17,6 @@ import { randomBytes as rand } from 'crypto'
 import { useNavigate } from 'react-router-dom'
 import { Box } from '@mui/system'
 
-
 export function randomBytes(byteCount: number) {
   return Uint8Array.from(rand(byteCount))
 }
@@ -53,15 +52,11 @@ const ContractOverviewPage: FC = () => {
   }
 
   return (
-    <>
-      {
-        <ContractListTemplate
-          data={contracts}
-          onContractClicked={handleContractClicked}
-          onAcceptOfferClicked={handleAcceptOfferClicked}
-        />
-      }
-    </>
+    <ContractListTemplate
+      data={contracts}
+      onContractClicked={handleContractClicked}
+      onAcceptOfferClicked={handleAcceptOfferClicked}
+    />
   )
 }
 

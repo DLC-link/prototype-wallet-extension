@@ -1,5 +1,5 @@
 import React from 'react'
-import { Table, TableRow, TableCell } from '@mui/material'
+import { Table, TableRow, TableCell, TableContainer } from '@mui/material'
 import { DateTime } from 'luxon'
 import { FC, useEffect, useState } from 'react'
 import { ContractState } from 'dlc-lib'
@@ -61,7 +61,6 @@ export const ContractView: FC<ContractViewProps> = (
       collateral:
         contract.contractInfo.totalCollateral - contract.offerParams.collateral,
     }
-    console.log(formattedContract)
     setFormattedContract(formattedContract)
   }
 
@@ -105,67 +104,80 @@ export const ContractView: FC<ContractViewProps> = (
   }
 
   return (
-    <Box sx={{ flex: 1, width: '100%' }}>
+    <Box
+      sx={{
+        flex: 1,
+        width: '100%',
+        top: '132.5px',
+        position: 'fixed',
+        zIndex: 1100,
+        height: '467.5px',
+        backgroundColor: '#4d4d4e',
+      }}
+    >
       {!isLoading && (
-        <Table sx={{ color: '#ffffff' }}>
-          <TableRow>
-            <TableCell>CONTRACT ID:</TableCell>
-            <TableCell>{formattedContract.ID}</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>STATE:</TableCell>
-            <TableCell>{formattedContract.state}</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>MATURITY DATE:</TableCell>
-            <TableCell>{formattedContract.maturityDate}</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>FEE RATE:</TableCell>
-            <TableCell>{formattedContract.feeRate}</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>COLLATERAL:</TableCell>
-            <TableCell>
-              <BtcDisplay
-                satvalue={formattedContract.collateral}
-                currency="sats"
-              ></BtcDisplay>
-            </TableCell>
-          </TableRow>
-          {blockChainLink !== null && (
+        <TableContainer sx={{ width: '429px' }}>
+          <Table sx={{ color: '#ffffff' }}>
             <TableRow>
-              <TableCell>FUNDING TX:</TableCell>
+              <TableCell>CONTRACT ID:</TableCell>
+              <TableCell>{formattedContract.ID}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>STATE:</TableCell>
+              <TableCell>{formattedContract.state}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>MATURITY DATE:</TableCell>
+              <TableCell>{formattedContract.maturityDate}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>FEE RATE:</TableCell>
+              <TableCell>{formattedContract.feeRate}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>COLLATERAL:</TableCell>
               <TableCell>
-                <OpenInNewIcon
-                  color="secondary"
-                  onClick={() => openNewTab(blockChainLink)}
-                  sx={[
-                    {
-                      '&:hover': {
-                        cursor: 'pointer',
-                      },
-                    },
-                  ]}
-                ></OpenInNewIcon>
+                <BtcDisplay
+                  satValue={formattedContract.collateral}
+                  currency="SATS"
+                ></BtcDisplay>
               </TableCell>
             </TableRow>
-          )}
-        </Table>
+            {blockChainLink !== null && (
+              <TableRow>
+                <TableCell>FUNDING TX:</TableCell>
+                <TableCell>
+                  <OpenInNewIcon
+                    color="secondary"
+                    onClick={() => openNewTab(blockChainLink)}
+                    sx={[
+                      {
+                        '&:hover': {
+                          cursor: 'pointer',
+                        },
+                      },
+                    ]}
+                  ></OpenInNewIcon>
+                </TableCell>
+              </TableRow>
+            )}
+          </Table>
+        </TableContainer>
       )}
       <Box
         sx={{
           display: 'flex',
           backgroundColor: '#4d4d4e',
           justifyContent: 'center',
+          alignItems: 'center',
           padding: '15px',
         }}
       >
-        {isProposal ? (
+        {isProposal && (
           <>
             <Button
               disabled={!canAccept}
-              sx={{ color: '#4d4d4e' }}
+              sx={{ color: '#4d4d4e', margin: '25px' }}
               variant="contained"
               color="secondary"
               onClick={handleAccept}
@@ -173,7 +185,7 @@ export const ContractView: FC<ContractViewProps> = (
               Accept
             </Button>
             <Button
-              sx={{ color: '#4d4d4e' }}
+              sx={{ color: '#4d4d4e', margin: '25px' }}
               variant="contained"
               color="primary"
               onClick={handleReject}
@@ -181,16 +193,15 @@ export const ContractView: FC<ContractViewProps> = (
               Reject
             </Button>
           </>
-        ) : (
-          <Button
-            sx={{ color: '#4d4d4e' }}
-            variant="contained"
-            color="secondary"
-            onClick={handleCancel}
-          >
-            Back
-          </Button>
         )}
+        <Button
+          sx={{ color: '#4d4d4e', margin: '25px' }}
+          variant="contained"
+          color="secondary"
+          onClick={handleCancel}
+        >
+          Back
+        </Button>
       </Box>
     </Box>
   )

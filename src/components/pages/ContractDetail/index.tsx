@@ -49,6 +49,12 @@ const ContractDetailPage: FC = () => {
     }
   }, [loading])
 
+  console.log("currentcontr")
+  console.log(contractId)
+  console.log(contracts)
+  console.log(contract)
+
+
   useEffect(() => {
     if (curContractId && contract?.state != ContractState.Accepted)
       contract = contracts.find((c) => getId(c) === curContractId)
@@ -122,7 +128,7 @@ const ContractDetailPage: FC = () => {
   }
 
   return (
-    <div style={{ width: "357px", height: "full" }}>
+    <>
       {contract !== undefined && (
         <ContractDetailTemplate
           data={contract}
@@ -132,7 +138,7 @@ const ContractDetailPage: FC = () => {
           availableAmount={availableAmount}
         />
       )}
-    </div>
+    </>
   )
 }
 

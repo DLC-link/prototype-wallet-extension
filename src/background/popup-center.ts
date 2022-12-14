@@ -6,7 +6,7 @@ interface PopupOptions {
   skipPopupFallback?: boolean;
 }
 export function popupCenter(options: PopupOptions): Promise<chrome.windows.Window> {
-  const { url, w = 357, h = 600 } = options;
+  const { url, w = 405, h = 600 } = options;
 
   return new Promise(resolve => {
     // @see https://developer.chrome.com/docs/extensions/reference/windows/#method-getCurrent
