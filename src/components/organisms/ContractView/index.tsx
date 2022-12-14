@@ -109,6 +109,7 @@ export const ContractView: FC<ContractViewProps> = (
         flex: 1,
         width: '100%',
         top: '132.5px',
+        left: '0px',
         position: 'fixed',
         zIndex: 1100,
         height: '467.5px',
@@ -177,15 +178,16 @@ export const ContractView: FC<ContractViewProps> = (
           <>
             <Button
               disabled={!canAccept}
-              sx={{ color: '#4d4d4e', margin: '25px' }}
+              sx={{ color: '#ffffff', margin: '25px' }}
               variant="contained"
               color="secondary"
+              
               onClick={handleAccept}
             >
               Accept
             </Button>
             <Button
-              sx={{ color: '#4d4d4e', margin: '25px' }}
+              sx={{ color: '#ffffff', margin: '25px' }}
               variant="contained"
               color="primary"
               onClick={handleReject}
@@ -195,7 +197,7 @@ export const ContractView: FC<ContractViewProps> = (
           </>
         )}
         <Button
-          sx={{ color: '#4d4d4e', margin: '25px' }}
+          sx={{ color: '#ffffff', margin: '25px' }}
           variant="contained"
           color="secondary"
           onClick={handleCancel}

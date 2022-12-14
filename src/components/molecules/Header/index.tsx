@@ -8,7 +8,7 @@ type HeaderProps = {
 const Header: FC<HeaderProps> = (
   props: HeaderProps
 ) => {
-  let title = undefined
+  let title;
 
   switch (props.type) {
     case 'list':

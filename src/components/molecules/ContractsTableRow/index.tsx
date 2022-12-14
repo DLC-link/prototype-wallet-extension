@@ -41,7 +41,7 @@ const createFormattedContract = (contract: AnyContract) => {
   const contractMaturityBound = contract.contractMaturityBound
   const zone = { zone: 'utc' }
   const dateTimeFormat = 'yyyy-LL-dd HH:mm:ss'
-  let blockChainLink = undefined
+  let blockChainLink;
   if (contract.state == ContractState.Broadcast) {
     const txID = Transaction.fromHex(contract.dlcTransactions.fund).getId()
     blockChainLink = Config.blockChainExplorerBaseUrl + `tx/${txID}`
