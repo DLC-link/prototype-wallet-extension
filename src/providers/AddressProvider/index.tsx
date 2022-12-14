@@ -1,27 +1,29 @@
 import React, { FC } from 'react'
 
 interface AddressProviderType {
-  getNewAddress: () => Promise<string>
+  getLastAddress: () => Promise<string[]>
 }
 
 const AddressContext = React.createContext({} as AddressProviderType)
 
 type ProviderProps = {
-  addressFn: () => Promise<string>
+  addressFn: () => Promise<string[]>
   children?: React.ReactNode
 }
 
 export const AddressProvider: FC<ProviderProps> = (props: ProviderProps) => {
-  const getNewAddress = async (): Promise<string> => {
+  const getLastAddress = async (): Promise<string[]> => {
     try {
-      return await props.addressFn()
+      let lastAddress = null
+      await props.addressFn().then((addresses) => lastAddress = addresses[addresses.length]) 
+      return lastAddress
     } catch {
-      return 'N/A'
+      return [];
     }
   }
 
   return (
-    <AddressContext.Provider value={{ getNewAddress: getNewAddress }}>
+    <AddressContext.Provider value={{ getLastAddress: getLastAddress }}>
       {props.children}
     </AddressContext.Provider>
   )

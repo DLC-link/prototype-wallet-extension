@@ -24,7 +24,7 @@ export const Tabs: FC<TabsProps> = (props: TabsProps) => {
   }
 
   return (
-    <Paper elevation={0}>
+    <Paper elevation={0} sx={{ backgroundColor: '#f7931a' }}>
       <MuiTabs value={props.value} onChange={handleTabChange}>
         {props.items.map((tab, i) => {
           return (
@@ -32,8 +32,9 @@ export const Tabs: FC<TabsProps> = (props: TabsProps) => {
               key={tab.label}
               label={
                 <Badge
+                sx={{ color: '#ffffff' }}
                   badgeContent={tab.new}
-                  color="primary"
+                  color="secondary"
                   invisible={!tab.new}
                 >
                   {tab.label}

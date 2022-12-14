@@ -15,14 +15,14 @@ import Config from './config'
 import { LocalRepository } from './persistence/localRepository'
 
 const storage = new LocalRepository()
-const blockchain = new ElectrsBlockchain(Config.blockchainExplorerBaseUrl)
+const blockchain = new ElectrsBlockchain(Config.bitcoinWalletApi)
 const wallet = new BitcoinJSWallet(storage, Config.network, blockchain)
 
 ReactDOM.render(
   <ProviderWrapper store={store}>
     <ThemeProvider theme={theme}>
       <SnackbarProvider>
-        <AddressProvider addressFn={() => wallet.getNewAddress()}>
+        <AddressProvider addressFn={() => storage.getAddresses()}>
           <StatusBarProvider balanceFn={() => wallet.getBalance()}>
             {routes}
           </StatusBarProvider>

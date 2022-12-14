@@ -20,7 +20,7 @@ export const history = createHashHistory()
 export type RootState = ReturnType<typeof rootReducer>
 
 const storage = new LocalRepository()
-const blockchain = new ElectrsBlockchain(Config.blockchainExplorerBaseUrl)
+const blockchain = new ElectrsBlockchain(Config.bitcoinWalletApi)
 const wallet = new BitcoinJSWallet(storage, Config.network, blockchain)
 const contractUpdater = new ContractUpdater(wallet, blockchain)
 const dlcManager = new DlcManager(contractUpdater, storage)

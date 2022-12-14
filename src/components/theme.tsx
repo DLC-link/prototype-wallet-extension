@@ -1,32 +1,101 @@
 import { createTheme } from '@mui/material/styles'
 
-const colorPrimary = '#f2a900'
-const colorSecondary = '#4d4d4e'
-const colorTextPrimary = '#ffffff'
-const colorTextSecondary = '#4d4d4e'
-const colorBackground = '#ffffff'
-const iconColor = '#4d4d4e'
-
 const theme = createTheme({
+  // typography: {
+  //   fontFamily: [
+  //     'Noyh Geometric Slim', 'sans-serif',
+  //     'Noyh Geometric', 'sans-serif'
+  //   ].join(','),
+  // },
+  components: {
+    MuiTypography: {
+      styleOverrides: {
+        root: {
+          color: '#ffffff'
+        }
+      }
+    },
+    MuiTableRow: {
+      styleOverrides: {
+        root: {
+          '&': {
+            backgroundColor: '#4d4d4e',
+            fontSize: '10px',
+          },
+        },
+      },
+    },
+    MuiTableHead: {
+      styleOverrides: {
+        root: {
+          backgroundColor: '#4d4d4e',
+        },
+      },
+    },
+    MuiTableCell: {
+      styleOverrides: {
+        root: {
+          fontSize: '15px',
+          fontWeight: 'light',
+          color: '#ffffff',
+          textAlign: 'center',
+          padding: '15px',
+        },
+        head: {
+          fontSize: '10px',
+          padding: '5px',
+        },
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          backgroundColor: '#f7931a'
+        },
+        text: {
+          backgroundColor: '#4d4d4e'
+        }
+      }
+    },
+    MuiIcon: {
+      styleOverrides: {
+        root: {
+          color: '#f7931a',
+        },
+      },
+    },
+    //@ts-ignore
+    MUIDataTableToolbar: {
+      styleOverrides: {
+        root: {
+          backgroundColor: '#f7931a',
+        },
+      },
+      actions: {
+        display: 'flex',
+        alignItems: 'end',
+        justifyContent: 'flex-end',
+      },
+    },
+  },
   palette: {
     primary: {
-      main: colorPrimary,
+      main: '#4d4d4e',
     },
     secondary: {
-      main: colorSecondary,
+      main: '#f7931a',
     },
     background: {
-      default: colorBackground,
-      paper: colorBackground,
+      default: '#f7931a',
+      paper: '#4d4d4e',
     },
     text: {
-      primary: colorTextPrimary,
-      secondary: colorTextSecondary,
+      primary: '#ffffff',
     },
     action: {
-      active: iconColor,
+      active: '#4d4d4e',
     },
   },
 })
 
-export default theme;
+export default theme

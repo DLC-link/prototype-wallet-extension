@@ -1,13 +1,13 @@
 import React, { FC, ReactElement, useState, useEffect } from 'react'
 // @ts-ignore
 import MUIDataTable, { MUIDataTableProps } from 'mui-datatables'
-import { ThemeProvider, createTheme } from '@mui/material/styles'
 import { BtcDisplay } from '../../atoms/BtcDisplay'
 import { AnyContract } from 'dlc-lib'
 import {
   getNumericOutcomeDescriptorRangePayouts,
   isEnumeratedContractDescriptor,
 } from 'dlc-lib'
+import { Box } from '@mui/system'
 
 export type DataGridProps = Omit<
   MUIDataTableProps,
@@ -15,82 +15,6 @@ export type DataGridProps = Omit<
 > & {
   data: AnyContract
 }
-
-const colorPrimary = '#ffffff'
-const colorSecondary = '#4d4d4e'
-const colorBackgroundPrimary = '#f2a900'
-const colorBackgroundSecondary = '#4d4d4e'
-const iconColor = '#f2a900'
-
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: colorPrimary,
-    },
-    secondary: {
-      main: colorSecondary,
-    },
-    background: {
-      default: colorBackgroundPrimary,
-      paper: colorBackgroundSecondary,
-    },
-    text: {
-      primary: colorPrimary,
-      secondary: colorSecondary,
-    },
-    action: {
-      active: iconColor,
-    },
-  },
-
-  components: {
-    MuiInput: {
-      styleOverrides: {
-        underline: {
-          '&:before': {
-            borderBottomColor: 'background',
-          },
-        },
-      },
-    },
-    MuiTableRow: {
-      styleOverrides: {
-        root: {
-          '&$selected': {
-            backgroundColor: 'secondary',
-          },
-          '&$hover:hover': {
-            backgroundColor: 'primary',
-          },
-        },
-      },
-    },
-    //@ts-ignore
-    MUIDataTableSelectCell: {
-      styleOverrides: {
-        root: {
-          display: 'none',
-        },
-      },
-    },
-    MUIDataTableHead: {
-      root: {
-        backgroundColor: 'white',
-        borderBottom: 'none',
-      },
-    },
-    MUIDataTableToolbar: {
-      root: {
-        backgroundColor: 'white',
-      },
-      actions: {
-        display: 'flex',
-        alignItems: 'end',
-        justifyContent: 'flex-end',
-      },
-    },
-  },
-})
 
 interface DisplayOutcome {
   outcome: string
@@ -157,8 +81,7 @@ const OutcomesGrid: FC<DataGridProps> = (props: DataGridProps) => {
         sort: true,
         customBodyRenderLite: (dataIndex: number): ReactElement => (
           <BtcDisplay
-            variant="inherit"
-            satvalue={data[dataIndex].offer}
+            satValue={data[dataIndex].offer}
             currency="BTC"
           />
         ),
@@ -172,8 +95,7 @@ const OutcomesGrid: FC<DataGridProps> = (props: DataGridProps) => {
         sort: true,
         customBodyRenderLite: (dataIndex: number): ReactElement => (
           <BtcDisplay
-            variant="inherit"
-            satvalue={data[dataIndex].accept}
+            satValue={data[dataIndex].accept}
             currency="BTC"
           />
         ),
@@ -182,9 +104,7 @@ const OutcomesGrid: FC<DataGridProps> = (props: DataGridProps) => {
   ]
 
   return (
-    <ThemeProvider theme={theme}>
       <MUIDataTable title={props.title} data={[...data]} columns={columns} />
-    </ThemeProvider>
   )
 }
 

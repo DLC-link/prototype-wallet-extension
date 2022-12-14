@@ -1,24 +1,21 @@
 import { Link, Typography, TypographyProps } from '@mui/material'
-import { styled } from '@mui/material'
 import numbro from 'numbro'
 import React, { FC, useEffect, useState } from 'react'
-import theme from '../../theme'
 
-export type BtcCurrency = 'sats' | 'BTC'
+export type BTCCurrency = 'SATS' | 'BTC'
 
-export type BtcDisplayProps = TypographyProps & {
-  satvalue: number
-  currency: BtcCurrency
-  pnlcolors?: boolean
+export type BTCDisplayProps = TypographyProps & {
+  satValue: number
+  currency: BTCCurrency
 }
 
-function toBtcDisplay(satValue: number): string {
+function toBTCDisplay(satValue: number): string {
   return numbro(satValue)
     .divide(100000000)
     .format({ thousandSeparated: true, mantissa: 8, trimMantissa: true })
 }
 
-function toSatDisplay(satValue: number): string {
+function toSATDisplay(satValue: number): string {
   return numbro(satValue).format({
     thousandSeparated: true,
     mantissa: 8,
@@ -26,54 +23,33 @@ function toSatDisplay(satValue: number): string {
   })
 }
 
-const BtcTypography = styled(Typography)<BtcDisplayProps>(
-  (props) => `
-    color: ${
-      props.pnlcolors
-        ? props.satvalue < 0
-          ? 'red'
-          : theme.palette.primary.main
-        : theme.palette.text.primary
-    }
-  `
-)
+export const BtcDisplay: FC<BTCDisplayProps> = (props: BTCDisplayProps) => {
+  const [currencyState, setCurrencyState] = useState('SATS')
 
-export const BtcDisplay: FC<BtcDisplayProps> = (props: BtcDisplayProps) => {
-  const [currencyState, setCurrencyState] = useState('sats')
-  const { pnlcolors, satvalue, currency, ...typoProps } = props
   useEffect(() => {
     setCurrencyState(props.currency)
   }, [props.currency, setCurrencyState])
 
   const handleCurrencyClick = (): void => {
-    currencyState === 'sats'
+    currencyState === 'SATS'
       ? setCurrencyState('BTC')
-      : setCurrencyState('sats')
+      : setCurrencyState('SATS')
   }
 
   return (
-    <>
-      <BtcTypography
-        fontSize={12}
-        pnlcolors={pnlcolors}
-        satvalue={satvalue}
-        currency={currency}
-        {...typoProps}
-      >
-        <Link
-          color="inherit"
-          underline="none"
-          onClick={handleCurrencyClick}
-          style={{ cursor: 'pointer' }}
-        >
-          {Number.isNaN(props.satvalue)
-            ? 'N/A'
-            : currencyState === 'sats'
-            ? toSatDisplay(props.satvalue)
-            : toBtcDisplay(props.satvalue)}{' '}
-          {currencyState}
-        </Link>
-      </BtcTypography>
-    </>
+    <Link
+      underline="none"
+      onClick={handleCurrencyClick}
+      style={{ cursor: 'pointer' }}
+    >
+      <Typography sx={{ padding: '5px', fontSize: '10px' }}>
+        {Number.isNaN(props.satValue)
+          ? 'N/A'
+          : currencyState === 'SATS'
+          ? toSATDisplay(props.satValue)
+          : toBTCDisplay(props.satValue)}{' '}
+        {currencyState}
+      </Typography>
+    </Link>
   )
 }

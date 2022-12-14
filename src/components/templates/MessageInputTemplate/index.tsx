@@ -1,7 +1,6 @@
 import React, { FC } from 'react'
 import Box from '@mui/material/Box'
 import { MessageInput } from '../../organisms/MessageInput'
-import MainLayout from '../../organisms/MainLayout'
 
 type MessageInputTemplateProps = {
   onProcess: (message: string) => void
@@ -21,9 +20,7 @@ const MessageInputTemplate: FC<MessageInputTemplateProps> = (
         backgroundColor: '#303855',
       }}
     >
-      <MainLayout>
         <MessageInput onProcess={props.onProcess} onCancel={props.onCancel} />
-      </MainLayout>
     </Box>
   )
 }

@@ -1,10 +1,9 @@
-import React, { FC, useState } from 'react'
-import Box from '@mui/material/Box'
-import MainLayout from '../../organisms/MainLayout'
-import { Tabs, TabItem } from '../../molecules/Tabs'
-import OutcomesGrid from '../../organisms/OutcomesGrid'
+import React, { FC } from 'react'
+import { Box, Stack } from '@mui/material'
 import { ContractView } from '../../organisms/ContractView'
 import { AnyContract } from 'dlc-lib'
+import StatusBar from '../../molecules/StatusBar'
+import Header from '../../molecules/Header'
 
 type ContractDetailTemplateProps = {
   data: AnyContract
@@ -14,18 +13,10 @@ type ContractDetailTemplateProps = {
   availableAmount: number
 }
 
-const tabItems: TabItem[] = [{ label: 'General' }, { label: 'Outcomes' }]
-
 const ContractDetailTemplate: FC<ContractDetailTemplateProps> = (
   props: ContractDetailTemplateProps
 ) => {
   const contract = props.data
-
-  const [tabIndex, setTabIndex] = useState(0)
-
-  const handleTabChange = (index: number): void => {
-    setTabIndex(index)
-  }
 
   const handleAccept = (): void => {
     props.acceptContract()
@@ -40,44 +31,25 @@ const ContractDetailTemplate: FC<ContractDetailTemplateProps> = (
   }
 
   return (
-    <Box
-      sx={{
-        height: '100%',
-        width: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        backgroundColor: '#4d4d4e',
-      }}
-    >
-      <MainLayout>
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-          }}
-        >
-          <Tabs
-            items={tabItems}
-            value={tabIndex}
-            onTabChange={(idx): void => handleTabChange(idx)}
-          />
-          {tabIndex === 0 && (
-            <ContractView
-              data={contract}
-              cancel={handleCancel}
-              acceptContract={handleAccept}
-              rejectContract={handleReject}
-              availableAmount={props.availableAmount}
-            />
-          )}
-          {tabIndex === 1 && (
-            <Box display="inline">
-              <OutcomesGrid title={'Contract Outcomes'} data={contract} />
-            </Box>
-          )}
-        </Box>
-      </MainLayout>
+    <Box sx={{ width: '405px', height: '600px'}}>
+      <StatusBar></StatusBar>
+      <Stack
+        sx={{
+          direction: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          width: '405px',
+        }}
+      >
+        <Header type='details'></Header>
+        <ContractView
+          data={contract}
+          cancel={handleCancel}
+          acceptContract={handleAccept}
+          rejectContract={handleReject}
+          availableAmount={props.availableAmount}
+        />
+      </Stack>
     </Box>
   )
 }

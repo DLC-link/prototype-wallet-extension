@@ -1,64 +1,53 @@
-import React, { FC } from 'react'
+import React, { FC, useState, useEffect } from 'react'
 import {
   AppBar,
   Box,
-  Button,
   Container,
-  createTheme,
-  IconButton,
-  Toolbar,
+  Toolbar
 } from '@mui/material'
-import { ThemeProvider } from '@mui/material/styles'
 import { Refresh } from '@mui/icons-material'
 import { LoadingButton } from '@mui/lab'
 import { NewAddressDialog } from '../../organisms/NewAddressDialog'
-
+import { useStatusBarContext } from '../../../providers/StatusBar'
 import p2plogo from '../../../assets/Bitcoin.svg'
 import { BtcDisplay } from '../../atoms/BtcDisplay'
 
 type StatusBarProps = {
-  balance: number
-  isLoading: boolean
-  refresh: () => void
+
 }
 
-const colorPrimary = '#f2a900'
-const colorSecondary = '#4d4d4e'
-const colorBackground = '#ffffff'
-const iconColor = '#4d4d4e'
-
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: colorPrimary,
-    },
-    secondary: {
-      main: colorSecondary,
-    },
-    background: {
-      default: colorBackground,
-      paper: colorBackground,
-    },
-    text: {
-      primary: colorPrimary,
-      secondary: colorSecondary,
-    },
-    action: {
-      active: iconColor,
-    },
-  },
-})
-
 const StatusBar: FC<StatusBarProps> = (props: StatusBarProps) => {
+  const statusBarContext = useStatusBarContext()
+
+  const [balance, setBalance] = useState(0)
+  const [isLoading, setLoading] = useState(true)
+
+  useEffect(() => {
+    getBalance()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const getBalance = async (): Promise<void> => {
+    setLoading(true)
+    await statusBarContext
+      .getBalance()
+      .then((balance) => setBalance(balance))
+      .then(() => setLoading(false))
+      .then(() => console.log(isLoading))
+  }
+
+  const handleRefresh = (): void => {
+    getBalance()
+  }
+
   return (
-    <div>
-      <ThemeProvider theme={theme}>
-        <AppBar position="relative">
+    <>
+        <AppBar position="fixed">
           <Toolbar>
             <Container sx={{ flex: 1 }}>
               <Box
                 component="img"
-                sx={{ height: '40px', margin: '12px 0' }}
+                sx={{ height: '45px', padding: '10px' }}
                 src={p2plogo}
                 alt="P2P-Derivatives"
               />
@@ -67,31 +56,28 @@ const StatusBar: FC<StatusBarProps> = (props: StatusBarProps) => {
               sx={{
                 display: 'flex',
                 alignItems: 'center',
-                marginRight: '0.5rem',
+                padding: '5px'
               }}
             >
               <LoadingButton
                 sx={{
-                  marginRight: '0.5rem',
                   '& .MuiLoadingButton-loadingIndicator': {
-                    color: "#4d4d4e",
+                    color: '#f7931a',
+                    width: '15px'
                   },
                 }}
-                size="small"
-                loading={props.isLoading}
-                color="secondary"
-                variant="text"
-                onClick={props.refresh}
+                loading={isLoading}
+                onClick={handleRefresh}
+                loadingPosition='start'
+                startIcon={<Refresh sx={{color: '#f7931a' }} />}
               >
-                <Refresh />
               </LoadingButton>
-              <BtcDisplay satvalue={props.balance} currency="BTC" />
+              <BtcDisplay satValue={balance} currency="BTC" />
             </Container>
-            <NewAddressDialog />
+            <NewAddressDialog/>
           </Toolbar>
         </AppBar>
-      </ThemeProvider>
-    </div>
+    </>
   )
 }
 

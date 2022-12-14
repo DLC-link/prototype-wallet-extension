@@ -1,95 +1,48 @@
 import * as React from 'react'
 import Button from '@mui/material/Button'
-import DialogContent from '@mui/material/DialogContent'
-import DialogTitle from '@mui/material/DialogTitle'
-import Dialog from '@mui/material/Dialog'
-import Typography from '@mui/material/Typography'
-import { FC, useState } from 'react'
-import { useAddressContext } from '../../../providers/AddressProvider'
-import ContactEmergencyIcon from '@mui/icons-material/ContactEmergency'
-import { IconButton, createTheme } from '@mui/material'
+import { FC } from 'react'
 import { useSnackbar } from '../../../providers/Snackbar'
+import { Typography } from '@mui/material'
 import ContentCopyIcon from '@mui/icons-material/ContentCopy'
-import { Stack, ThemeProvider } from '@mui/system'
+import { BitcoinJSWallet } from 'dlc-lib'
+import { ElectrsBlockchain } from 'dlc-lib'
+import Config from '../../../config'
+import { LocalRepository } from '../../../persistence/localRepository'
+
+const storage = new LocalRepository()
+const blockchain = new ElectrsBlockchain(Config.bitcoinWalletApi)
+const wallet = new BitcoinJSWallet(storage, Config.network, blockchain)
 
 export const NewAddressDialog: FC = () => {
-  const addressContext = useAddressContext()
-  const [open, setOpen] = React.useState(false)
-  const [balance, setBalance] = useState('')
-
   const snackbar = useSnackbar()
 
-  const handleClickOpen = async (): Promise<void> => {
-    setBalance(await addressContext.getNewAddress())
-    setOpen(true)
+  const copyToClickBoard = async () => {
+    const newAddress = await wallet.getNewAddress()
+    navigator.clipboard.writeText(newAddress)
+    snackbar.createSnack('Wallet Address copied to clipboard!', 'success')
   }
-
-  const handleClose = () => {
-    setOpen(false)
-  }
-
-  const copyToClickBoard = (address: string) => {
-    navigator.clipboard.writeText(address)
-    snackbar.createSnack('Address copied to clipboard!', 'success')
-  }
-
-  const colorPrimary = '#f2a900'
-  const colorSecondary = '#4d4d4e'
-  const colorBackground = '#ffffff'
-  const iconColor = '#4d4d4e'
-
-  const theme = createTheme({
-    palette: {
-      primary: {
-        main: colorPrimary,
-      },
-      secondary: {
-        main: colorSecondary,
-      },
-      background: {
-        default: colorBackground,
-        paper: colorBackground,
-      },
-      text: {
-        primary: colorPrimary,
-        secondary: colorSecondary,
-      },
-      action: {
-        active: iconColor,
-      },
-    },
-  })
 
   return (
-    <ThemeProvider theme={theme}>
+    <>
       <Button
-        size="small"
-        color="secondary"
-        variant="text"
-        onClick={handleClickOpen}
+      variant='contained'
+        sx={{ height: '45px', width: '200px' }}
+        onClick={() => copyToClickBoard()}
       >
-        <ContactEmergencyIcon color="secondary"></ContactEmergencyIcon>
+        <Typography
+          sx={{
+            fontSize: '12px',
+            fontWeight: 'normal',
+            lineHeight: '15px',
+            padding: '5px',
+          }}
+        >
+          WALLET ADDRESS
+        </Typography>
+        <ContentCopyIcon
+          sx={{ height: '15px', color: '#ffffff', padding: '2.5px' }}
+        ></ContentCopyIcon>
       </Button>
-      <Dialog open={open} onClose={handleClose}>
-        <DialogTitle textAlign="center" color="primary">
-          Address to fund the wallet
-        </DialogTitle>
-        <DialogContent dividers>
-          <Stack
-            direction="row"
-            alignItems="center"
-            justifyContent="center"
-            spacing="15px"
-          >
-            <Typography color="primary" fontSize="10px" gutterBottom>
-              {balance}
-            </Typography>
-            <IconButton size="small" onClick={() => copyToClickBoard(balance)}>
-              <ContentCopyIcon color="primary"></ContentCopyIcon>
-            </IconButton>
-          </Stack>
-        </DialogContent>
-      </Dialog>
-    </ThemeProvider>
+    </>
   )
 }
