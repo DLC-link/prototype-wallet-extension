@@ -1,7 +1,7 @@
 {
-  "name": "DLC.Link Bitcoin Extension",
+  "name": "DLC.Link Bitcoin Wallet Prototype",
   "description": "Accept and broadcast Discreet Log Contracts",
-  "version": "1.0",
+  "version": "0.1.0",
   "manifest_version": 3,
   "action": {
     "default_popup": "index.html",
@@ -15,10 +15,22 @@
   "content_security_policy": {
     "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
   },
-  "permissions": ["storage", "management"],
-  "host_permissions": ["http://localhost:3004/*", "http://50.19.154.13:3004/*"],
+  "permissions": [
+    "storage",
+    "management"
+  ],
+  "host_permissions": [
+    "http://localhost:3004/*",
+    "http://50.19.154.13:3004/*"
+  ],
   "externally_connectable": {
-    "matches": ["http://localhost:8888/*", "https://app.dlc.link/*", "*://localhost/*", "https://roaring-kashata-e5d4ba.netlify.app/*", "https://lending.dlc.link/*"]
+    "matches": [
+      "http://localhost:8888/*",
+      "https://app.dlc.link/*",
+      "*://localhost/*",
+      "https://roaring-kashata-e5d4ba.netlify.app/*",
+      "https://lending.dlc.link/*"
+    ]
   },
   "background": {
     "service_worker": "background.js"
