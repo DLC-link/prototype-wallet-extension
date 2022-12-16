@@ -3,7 +3,7 @@ export interface RequestInterface {
   action: 'get-offer' | 'get-offer-internal',
   data: {
     offer: string,
-    wallet: string
+    counterparty_wallet_url: string
   }
 }
 
