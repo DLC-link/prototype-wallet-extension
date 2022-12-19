@@ -24,7 +24,6 @@
       "http://localhost:8888/*",
       "https://app.dlc.link/*",
       "*://localhost/*",
-      "https://roaring-kashata-e5d4ba.netlify.app/*",
       "https://lending.dlc.link/*"
     ]
   },

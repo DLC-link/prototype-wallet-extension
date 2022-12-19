@@ -12,7 +12,6 @@ import { dlcActionError, offerRequest } from '../../store/dlc/actions'
 import { ApplicationState } from '../../store'
 import { RequestInterface } from '../background';
 
-
 const useSelector: TypedUseSelectorHook<ApplicationState> = useReduxSelector;
 
 export const PopupHandler: FC = () => {
@@ -20,10 +19,11 @@ export const PopupHandler: FC = () => {
   const dispatch = useDispatch();
   const dlcError = useSelector((state) => state.dlc.error);
   const success = useSelector((state) => state.dlc.actionSuccess);
-  const curContractId = useSelector((state) => state.dlc.currentId);
+  const currContractId = useSelector((state) => state.dlc.currentId);
   const [displayError, setDisplayError] = useState(true);
   const [processRequested, setProcessRequested] = useState(false);
   const snackbar = useSnackbar();
+  const [wallet, setWallet] = useState('')
 
   useEffect(() => {
     if (displayError && dlcError) {
@@ -35,7 +35,7 @@ export const PopupHandler: FC = () => {
 
   useEffect(() => {
     if (processRequested && success) {
-      navigate(`/contractdisplay/${curContractId}`);
+      navigate(`/contractdisplay/${currContractId}/${wallet}`);
       setProcessRequested(false);
     }
   })
@@ -47,7 +47,8 @@ export const PopupHandler: FC = () => {
 
   chrome.runtime.onMessage.addListener((request: RequestInterface, sender, sendResponse) => {
     if (request.action == 'get-offer-internal') {
-      handleProcessClicked(JSON.stringify(request.data));
+      setWallet(request.data.counterparty_wallet_url)
+      handleProcessClicked(JSON.stringify(request.data.offer));
       sendResponse('[PopUpHandler]: Heard get-offer-internal')
     }
     sendResponse('[PopUpHandler]: Invalid request.action')

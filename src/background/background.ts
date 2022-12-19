@@ -1,7 +1,10 @@
 import { popupCenter } from "./popup-center";
 export interface RequestInterface {
   action: 'get-offer' | 'get-offer-internal',
-  data: string
+  data: {
+    offer: string,
+    counterparty_wallet_url: string
+  }
 }
 
 chrome.runtime.onMessageExternal.addListener(

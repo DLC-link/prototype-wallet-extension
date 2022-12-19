@@ -18,7 +18,7 @@ const useSelector: TypedUseSelectorHook<ApplicationState> = useReduxSelector
 const ContractDetailPage: FC = () => {
   const dispatch = useDispatch()
   const loading = useSelector((state) => state.dlc.processing)
-  const params = useParams()
+  const { contractId, wallet } = useParams()
   const success = useSelector((state) => state.dlc.actionSuccess)
   const [signingRequested, setSigningRequested] = useState(false)
   const [acceptMessageSubmitted, setAcceptMessageSubmitted] = useState(false)
@@ -26,13 +26,10 @@ const ContractDetailPage: FC = () => {
   const dlcError = useSelector((state) => state.dlc.error)
   const [displayError, setDisplayError] = useState(true)
   const curContractId = useSelector((state) => state.dlc.currentId)
-  const contractId = params.contractId
   const contracts = useSelector((state) => state.dlc.contracts)
   let contract = contracts.find((c) => getId(c) === contractId)
   const navigate = useNavigate()
-
   const statusBarCtx = useStatusBarContext()
-
   const [availableAmount, setAvailableAmount] = useState(0)
 
   useEffect(() => {
@@ -48,12 +45,6 @@ const ContractDetailPage: FC = () => {
       snackbar.createSnack('Loading...', 'warning')
     }
   }, [loading])
-
-  console.log("currentcontr")
-  console.log(contractId)
-  console.log(contracts)
-  console.log(contract)
-
 
   useEffect(() => {
     if (curContractId && contract?.state != ContractState.Accepted)
@@ -107,7 +98,7 @@ const ContractDetailPage: FC = () => {
       // NOTE: hardcoded wallet BE endpoint
       try {
         await fetch(
-          "https://dev-oracle.dlc.link/wallet/offer/accept",
+          `${decodeURIComponent(wallet)}/offer/accept`,
           {
             headers: {'Content-Type': 'application/json'},
             method: 'PUT',
