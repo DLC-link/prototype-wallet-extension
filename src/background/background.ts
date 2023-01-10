@@ -1,7 +1,10 @@
 import { popupCenter } from "./popup-center";
 export interface RequestInterface {
   action: 'get-offer' | 'get-offer-internal',
-  data: string
+  data: {
+    offer: string,
+    counterparty_wallet_url: string
+  }
 }
 
 chrome.runtime.onMessageExternal.addListener(
@@ -13,7 +16,7 @@ chrome.runtime.onMessageExternal.addListener(
 
         // TODO: this works because we want to wait or the window to load fully. Should at least show the user that its loading.
         setTimeout(
-          () => chrome.runtime.sendMessage({ action: 'get-offer-internal', data: request.data }, (response) => console.log('[BG script]: response back from popuphandler:', response)),
+          () => chrome.runtime.sendMessage({ action: 'get-offer-internal', data: request.data}, (response) => console.log('[BG script]: response back from popuphandler:', response)),
           700
         )
         break;

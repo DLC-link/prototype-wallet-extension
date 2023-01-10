@@ -47,7 +47,7 @@ export const PopupHandler: FC = () => {
 
   chrome.runtime.onMessage.addListener((request: RequestInterface, sender, sendResponse) => {
     if (request.action == 'get-offer-internal') {
-      handleProcessClicked(JSON.stringify(request.data));
+      handleProcessClicked(JSON.stringify(request.data.offer));
       sendResponse('[PopUpHandler]: Heard get-offer-internal')
     }
     sendResponse('[PopUpHandler]: Invalid request.action')
