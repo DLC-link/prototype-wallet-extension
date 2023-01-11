@@ -98,7 +98,7 @@ const ContractDetailPage: FC = () => {
       // NOTE: hardcoded wallet BE endpoint
       try {
         await fetch(
-          `${decodeURIComponent(wallet)}/offer/accept`,
+          "https://dev-oracle.dlc.link/wallet/offer/accept",
           {
             headers: {'Content-Type': 'application/json'},
             method: 'PUT',

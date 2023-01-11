@@ -35,7 +35,7 @@ export const PopupHandler: FC = () => {
 
   useEffect(() => {
     if (processRequested && success) {
-      navigate(`/contractdisplay/${currContractId}/${wallet}`);
+      navigate(`/contractdisplay/${currContractId}`);
       setProcessRequested(false);
     }
   })
