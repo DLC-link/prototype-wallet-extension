@@ -7,7 +7,12 @@ import {
 import { ApplicationState } from '../../../store'
 
 import ContractDetailTemplate from '../../templates/ContractDetailTemplate'
-import { dlcActionError, acceptRequest, rejectRequest, signRequest } from '../../../store/dlc/actions'
+import {
+  dlcActionError,
+  acceptRequest,
+  rejectRequest,
+  signRequest,
+} from '../../../store/dlc/actions'
 import { useNavigate, useParams } from 'react-router-dom'
 import { ContractState, getId, toAcceptMessage } from 'dlc-lib'
 import { useStatusBarContext } from '../../../providers/StatusBar'
@@ -49,7 +54,8 @@ const ContractDetailPage: FC = () => {
   useEffect(() => {
     if (curContractId && contract?.state != ContractState.Accepted)
       contract = contracts.find((c) => getId(c) === curContractId)
-    console.log(curContractId, contract)
+    console.log('Current Contract: ')
+    console.log(contract)
   }, [curContractId])
 
   useEffect(() => {
@@ -64,8 +70,12 @@ const ContractDetailPage: FC = () => {
     if (signingRequested && success) {
       navigate(`/`)
     }
-    if (acceptMessageSubmitted && success && contract?.state === ContractState.Accepted) {
-      writeAcceptMessage();
+    if (
+      acceptMessageSubmitted &&
+      success &&
+      contract?.state === ContractState.Accepted
+    ) {
+      writeAcceptMessage()
     }
   })
 
@@ -93,27 +103,26 @@ const ContractDetailPage: FC = () => {
   async function writeAcceptMessage() {
     console.log('writeAcceptMessage:')
     if (contract?.state === ContractState.Accepted) {
-      const acceptMessage = toAcceptMessage(contract);
-      const formattedMessage = { "acceptMessage": JSON.stringify(acceptMessage).toString() };
+      const acceptMessage = toAcceptMessage(contract)
+      const formattedMessage = {
+        acceptMessage: JSON.stringify(acceptMessage).toString(),
+      }
       // NOTE: hardcoded wallet BE endpoint
       try {
-        await fetch(
-          `${decodeURIComponent(wallet)}/offer/accept`,
-          {
-            headers: {'Content-Type': 'application/json'},
-            method: 'PUT',
-            mode: 'cors',
-            body: JSON.stringify(formattedMessage)
-          }
-        )
+        await fetch(`${decodeURIComponent(wallet)}/offer/accept`, {
+          headers: { 'Content-Type': 'application/json' },
+          method: 'PUT',
+          mode: 'cors',
+          body: JSON.stringify(formattedMessage),
+        })
           .then((x) => x.json())
           .then((res) => {
-            console.log(res);
-            signAcceptMessage(JSON.stringify(res));
-            setAcceptMessageSubmitted(false);
+            console.log(res)
+            signAcceptMessage(JSON.stringify(res))
+            setAcceptMessageSubmitted(false)
           })
       } catch (error) {
-        console.error(`Fetch Error: ${error}`);
+        console.error(`Fetch Error: ${error}`)
       }
     }
   }

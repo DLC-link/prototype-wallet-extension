@@ -85,10 +85,15 @@ export const ContractView: FC<ContractViewProps> = (
   }, [contract, setContract, props.data])
 
   useEffect(() => {
-    setCanAccept(
+    const canAccept =
       props.availableAmount >=
-        contract.contractInfo.totalCollateral - contract.offerParams.collateral
-    )
+      contract.contractInfo.totalCollateral - contract.offerParams.collateral
+    setCanAccept(canAccept)
+    console.log('Accept Parameters:')
+    console.log('Available Amount:', props.availableAmount)
+    console.log('Total Collateral:', contract.contractInfo.totalCollateral)
+    console.log('Offer Collateral:', contract.offerParams.collateral)
+    console.log('Can Accept?', canAccept)
   }, [props.availableAmount, contract])
 
   const handleAccept = (): void => {
@@ -181,7 +186,6 @@ export const ContractView: FC<ContractViewProps> = (
               sx={{ color: '#ffffff', margin: '25px' }}
               variant="contained"
               color="secondary"
-              
               onClick={handleAccept}
             >
               Accept
