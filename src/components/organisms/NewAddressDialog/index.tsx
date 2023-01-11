@@ -20,6 +20,7 @@ export const NewAddressDialog: FC = () => {
     const newAddress = await wallet.getNewAddress()
     navigator.clipboard.writeText(newAddress)
     snackbar.createSnack('Wallet Address copied to clipboard!', 'success')
+    console.log('Wallet Address: ', newAddress)
   }
 
   return (
