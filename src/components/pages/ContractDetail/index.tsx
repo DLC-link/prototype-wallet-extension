@@ -72,7 +72,7 @@ const ContractDetailPage: FC = () => {
 
   useEffect(() => {
     const logCounterPartyWalletURL = async () => {
-      console.log('Chrome Storage Address:')
+      console.log('Counterparty Wallet URL:')
       console.log(await getCounterpartyWalletURL())
     }
     logCounterPartyWalletURL();
@@ -101,8 +101,8 @@ const ContractDetailPage: FC = () => {
 
   function getCounterpartyWalletURL() {
     return new Promise((resolve) => {
-      chrome.storage.sync.get("counterparty-wallet-url", function(data) {
-        resolve(data.walletAddress);
+      chrome.storage.sync.get("counterpartyWalletURL", function(data) {
+        resolve(data.counterpartyWalletURL);
       });
     });
   }
