@@ -19,7 +19,6 @@ const ContractDetailPage: FC = () => {
   const dispatch = useDispatch()
   const loading = useSelector((state) => state.dlc.processing)
   const { contractId  } = useParams()
-  const [counterPartyWalletAddress, setCounterPartWalletAddress] = useState(undefined)
   const success = useSelector((state) => state.dlc.actionSuccess)
   const [signingRequested, setSigningRequested] = useState(false)
   const [acceptMessageSubmitted, setAcceptMessageSubmitted] = useState(false)
