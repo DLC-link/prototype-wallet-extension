@@ -9,6 +9,7 @@ module.exports = {
   entry: {
     background: path.join(SRC_ROOT_PATH, 'background', 'background.ts'),
     index: path.join(SRC_ROOT_PATH, 'index.tsx'),
+    options: path.join(SRC_ROOT_PATH, 'options.js')
   },
   output: {
     path: path.join(__dirname, '/dist'),
