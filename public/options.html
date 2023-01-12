@@ -1,24 +1,15 @@
 <!DOCTYPE html>
-<html>
-<head><title>My Test Extension Options</title></head>
-<body>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Bitcoin Wallet</title>
+  </head>
 
-Favorite color:
-<select id="color">
- <option value="red">red</option>
- <option value="green">green</option>
- <option value="blue">blue</option>
- <option value="yellow">yellow</option>
-</select>
-
-<label>
-  <input type="checkbox" id="like">
-  I like colors.
-</label>
-
-<div id="status"></div>
-<button id="save">Save</button>
-
-<script src="options.js"></script>
-</body>
+  <body>
+    <form id="options-form">
+      <label for="wallet-address">Wallet Address:</label>
+      <input type="text" id="wallet-address" name="wallet-address" />
+      <button type="submit">Save</button>
+    </form>
+  </body>
 </html>
