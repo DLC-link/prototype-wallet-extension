@@ -90,7 +90,16 @@ const ContractDetailPage: FC = () => {
     dispatch(signRequest(message))
   }
 
+  function getWalletAddress() {
+    return new Promise((resolve) => {
+      chrome.storage.sync.get("walletAddress", function(data) {
+        resolve(data.walletAddress);
+      });
+    });
+  }
+
   async function writeAcceptMessage() {
+    const walletAddress = await getWalletAddress();
     console.log('writeAcceptMessage:')
     if (contract?.state === ContractState.Accepted) {
       const acceptMessage = toAcceptMessage(contract);
@@ -98,7 +107,7 @@ const ContractDetailPage: FC = () => {
       // NOTE: hardcoded wallet BE endpoint
       try {
         await fetch(
-          `${decodeURIComponent(wallet)}/offer/accept`,
+          `${walletAddress}/offer/accept`,
           {
             headers: {'Content-Type': 'application/json'},
             method: 'PUT',
