@@ -18,7 +18,7 @@ const useSelector: TypedUseSelectorHook<ApplicationState> = useReduxSelector
 const ContractDetailPage: FC = () => {
   const dispatch = useDispatch()
   const loading = useSelector((state) => state.dlc.processing)
-  const { contractId, wallet } = useParams()
+  const { contractId  } = useParams()
   const success = useSelector((state) => state.dlc.actionSuccess)
   const [signingRequested, setSigningRequested] = useState(false)
   const [acceptMessageSubmitted, setAcceptMessageSubmitted] = useState(false)
@@ -69,6 +69,14 @@ const ContractDetailPage: FC = () => {
     }
   })
 
+  useEffect(() => {
+    const logCounterPartyWalletURL = async () => {
+      console.log('Counterparty Wallet URL:')
+      console.log(await getCounterpartyWalletURL())
+    }
+    logCounterPartyWalletURL();
+  },[])
+
   const handleAccept = (): void => {
     // This action will set the contract's status to Accepted
     // It will also update the contractID from temp to id.
@@ -90,7 +98,16 @@ const ContractDetailPage: FC = () => {
     dispatch(signRequest(message))
   }
 
+  function getCounterpartyWalletURL() {
+    return new Promise((resolve) => {
+      chrome.storage.sync.get("counterpartyWalletURL", function(data) {
+        resolve(data.counterpartyWalletURL);
+      });
+    });
+  }
+
   async function writeAcceptMessage() {
+    const counterpartyWalletURL = await getCounterpartyWalletURL();
     console.log('writeAcceptMessage:')
     if (contract?.state === ContractState.Accepted) {
       const acceptMessage = toAcceptMessage(contract);
@@ -98,7 +115,7 @@ const ContractDetailPage: FC = () => {
       // NOTE: hardcoded wallet BE endpoint
       try {
         await fetch(
-          `${decodeURIComponent(wallet)}/offer/accept`,
+          `${counterpartyWalletURL}/offer/accept`,
           {
             headers: {'Content-Type': 'application/json'},
             method: 'PUT',
