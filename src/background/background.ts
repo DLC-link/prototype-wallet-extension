@@ -2,8 +2,7 @@ import { popupCenter } from "./popup-center";
 export interface RequestInterface {
   action: 'get-offer' | 'get-offer-internal',
   data: {
-    offer: string,
-    counterparty_wallet_url: string
+    offer: string
   }
 }
 

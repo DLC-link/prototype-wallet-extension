@@ -16,7 +16,7 @@ const routes = (
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route
-          path="/contractdisplay/:contractId/:wallet"
+          path="/contractdisplay/:contractId"
           element={<ContractDetailPage />}
         />
       </Routes>

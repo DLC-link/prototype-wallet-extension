@@ -23,7 +23,6 @@ export const PopupHandler: FC = () => {
   const [displayError, setDisplayError] = useState(true);
   const [processRequested, setProcessRequested] = useState(false);
   const snackbar = useSnackbar();
-  const [wallet, setWallet] = useState('')
 
   useEffect(() => {
     if (displayError && dlcError) {
@@ -35,7 +34,7 @@ export const PopupHandler: FC = () => {
 
   useEffect(() => {
     if (processRequested && success) {
-      navigate(`/contractdisplay/${currContractId}/${wallet}`);
+      navigate(`/contractdisplay/${currContractId}`);
       setProcessRequested(false);
     }
   })
@@ -47,7 +46,6 @@ export const PopupHandler: FC = () => {
 
   chrome.runtime.onMessage.addListener((request: RequestInterface, sender, sendResponse) => {
     if (request.action == 'get-offer-internal') {
-      setWallet(request.data.counterparty_wallet_url)
       handleProcessClicked(JSON.stringify(request.data.offer));
       sendResponse('[PopUpHandler]: Heard get-offer-internal')
     }

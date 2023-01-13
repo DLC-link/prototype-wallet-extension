@@ -9,6 +9,7 @@ module.exports = {
   entry: {
     background: path.join(SRC_ROOT_PATH, 'background', 'background.ts'),
     index: path.join(SRC_ROOT_PATH, 'index.tsx'),
+    options: path.join(SRC_ROOT_PATH, 'options.js')
   },
   output: {
     path: path.join(__dirname, '/dist'),
@@ -23,7 +24,8 @@ module.exports = {
         path.join(__dirname, '/public/BTC.png'),
         path.join(__dirname, '/public/favicon.ico'),
         path.join(__dirname, '/public/index.html'),
-        path.join(__dirname, '/public/popup-center.html')
+        path.join(__dirname, '/public/popup-center.html'),
+        path.join(__dirname, '/public/options.html'),
       ],
     }),
     new CopyPlugin({
