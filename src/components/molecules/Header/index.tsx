@@ -12,7 +12,7 @@ const Header: FC<HeaderProps> = (
 
   switch (props.type) {
     case 'list':
-      title = "MY DLC's"
+      title = "MY DLCs"
       break
     case 'details':
       title = 'CONTRACT DETAILS'
