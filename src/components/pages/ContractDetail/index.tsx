@@ -85,9 +85,7 @@ const ContractDetailPage: FC = () => {
       const counterpartyWalletURL = await getCounterpartyWalletURL()
       console.log(
         'Counterparty Wallet URL:',
-        counterpartyWalletURL === undefined
-          ? defaultCounterpartyWalletURL
-          : counterpartyWalletURL
+        counterpartyWalletURL || defaultCounterpartyWalletURL
       )
     }
     logCounterPartyWalletURL()
@@ -133,9 +131,7 @@ const ContractDetailPage: FC = () => {
       try {
         await fetch(
           `${
-            counterpartyWalletURL === undefined
-              ? defaultCounterpartyWalletURL
-              : counterpartyWalletURL
+            counterpartyWalletURL || defaultCounterpartyWalletURL
           }/offer/accept`,
           {
             headers: { 'Content-Type': 'application/json' },
