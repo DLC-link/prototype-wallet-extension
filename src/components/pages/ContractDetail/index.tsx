@@ -23,7 +23,7 @@ const useSelector: TypedUseSelectorHook<ApplicationState> = useReduxSelector
 const ContractDetailPage: FC = () => {
   const dispatch = useDispatch()
   const loading = useSelector((state) => state.dlc.processing)
-  const { contractId  } = useParams()
+  const { contractId } = useParams()
   const success = useSelector((state) => state.dlc.actionSuccess)
   const [signingRequested, setSigningRequested] = useState(false)
   const [acceptMessageSubmitted, setAcceptMessageSubmitted] = useState(false)
@@ -36,6 +36,7 @@ const ContractDetailPage: FC = () => {
   const navigate = useNavigate()
   const statusBarCtx = useStatusBarContext()
   const [availableAmount, setAvailableAmount] = useState(0)
+  const defaultCounterpartyWalletURL = 'https://dev-oracle.dlc.link/wallet'
 
   useEffect(() => {
     if (displayError && dlcError) {
@@ -81,11 +82,16 @@ const ContractDetailPage: FC = () => {
 
   useEffect(() => {
     const logCounterPartyWalletURL = async () => {
-      console.log('Counterparty Wallet URL:')
-      console.log(await getCounterpartyWalletURL())
+      const counterpartyWalletURL = await getCounterpartyWalletURL()
+      console.log(
+        'Counterparty Wallet URL:',
+        counterpartyWalletURL === undefined
+          ? defaultCounterpartyWalletURL
+          : counterpartyWalletURL
+      )
     }
-    logCounterPartyWalletURL();
-  },[])
+    logCounterPartyWalletURL()
+  }, [])
 
   const handleAccept = (): void => {
     // This action will set the contract's status to Accepted
@@ -110,14 +116,14 @@ const ContractDetailPage: FC = () => {
 
   function getCounterpartyWalletURL() {
     return new Promise((resolve) => {
-      chrome.storage.sync.get("counterpartyWalletURL", function(data) {
-        resolve(data.counterpartyWalletURL);
-      });
-    });
+      chrome.storage.sync.get('counterpartyWalletURL', function (data) {
+        resolve(data.counterpartyWalletURL)
+      })
+    })
   }
 
   async function writeAcceptMessage() {
-    const counterpartyWalletURL = await getCounterpartyWalletURL();
+    const counterpartyWalletURL = await getCounterpartyWalletURL()
     console.log('writeAcceptMessage:')
     if (contract?.state === ContractState.Accepted) {
       const acceptMessage = toAcceptMessage(contract)
@@ -126,12 +132,16 @@ const ContractDetailPage: FC = () => {
       }
       try {
         await fetch(
-          `${counterpartyWalletURL}/offer/accept`,
+          `${
+            counterpartyWalletURL === undefined
+              ? defaultCounterpartyWalletURL
+              : counterpartyWalletURL
+          }/offer/accept`,
           {
-            headers: {'Content-Type': 'application/json'},
+            headers: { 'Content-Type': 'application/json' },
             method: 'PUT',
             mode: 'cors',
-            body: JSON.stringify(formattedMessage)
+            body: JSON.stringify(formattedMessage),
           }
         )
           .then((x) => x.json())
