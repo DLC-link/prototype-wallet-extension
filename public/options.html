@@ -1,20 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>Bitcoin Wallet</title>
-  </head>
 
-  <body>
-    <form id="options-form">
-      <label for="counterparty-wallet-url">Counterparty Wallet URL:</label>
-      <input
-        type="text"
-        id="counterparty-wallet-url"
-        name="counterparty-wallet-url"
-      />
-      <button type="submit" id="save">Save</button>
-    </form>
-  </body>
+<head>
+  <meta charset="utf-8" />
+  <title>Bitcoin Wallet</title>
+</head>
+
+<body>
+  <div>Counterparty Wallet URL current val: <span id="currVal"></span></div>
+  <div type="button" id="fetch" style="
+          display:inline-block;
+          color:#444;
+          border:1px solid #CCC;
+          background:#DDD;
+          box-shadow: 0 0 5px -1px rgba(0,0,0,0.2);
+          cursor:pointer;
+          vertical-align:middle;
+          max-width: 100px;
+          padding: 5px;
+          text-align: center;">Fetch current value</button></div>
+  <form id="options-form">
+    <label for="counterparty-wallet-url">Counterparty Wallet URL:</label>
+    <input type="text" id="counterparty-wallet-url" name="counterparty-wallet-url" />
+    <button type="submit" id="save">Save</button>
+  </form>
+
+</body>
+
 </html>
 <script src="options.js"></script>
