@@ -21,16 +21,10 @@
   },
 
   "permissions": ["storage", "management", "declarativeContent"],
-  "host_permissions": ["http://localhost:3004/*", "http://50.19.154.13:3004/*", "https://dev-oracle.dlc.link/electrs/*", "https://thriving-starlight-4a7fe8.netlify.app/"],
+  "host_permissions": ["*://*/*"],
 
   "externally_connectable": {
-    "matches": [
-      "http://localhost:8888/*",
-      "https://app.dlc.link/*",
-      "*://localhost/*",
-      "https://lending.dlc.link/*",
-      "https://thriving-starlight-4a7fe8.netlify.app/"
-    ]
+    "matches": ["*://*/*"]
   },
   "background": {
     "service_worker": "background.js"
